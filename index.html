@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#121212">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>મ્યુઝિકલ હાઉઝી · DRL</title>
+  <link rel="stylesheet" href="css/style.css?v=20260629d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@200;300&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+
+  <!-- ══ Sticky Top Bar — Glassmorphism ════════════════ -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <!-- Brand: icon + title + subtitle -->
+      <div class="top-brand">
+        <div class="top-brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </div>
+        <div class="top-brand-text">
+          <span class="top-title" id="event-title">ડભોઈ રોયેલ લેડીઝ</span>
+          <div class="top-subtitle-row">
+            <span class="top-game" id="event-subtitle">મ્યુઝિકલ હાઉઝી</span>
+          </div>
+        </div>
+      </div>
+      <!-- Restart button — Spotify green play -->
+      <button class="restart-btn" id="btn-restart" aria-label="Restart game">
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <circle cx="24" cy="24" r="24" fill="#1DB954"/>
+          <polygon points="20,17 33,24 20,31" fill="#fff"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Animated bottom glow line -->
+    <div class="top-bar-glow" aria-hidden="true"></div>
+  </header>
+
+  <!-- ══ Scrollable Main ═════════════════════════════════ -->
+  <main class="main-scroll" id="main-scroll">
+
+    <!-- NOW PLAYING ─────────────────────────────────────── -->
+    <section class="now-playing">
+
+      <!-- Album Art: gradient fallback + YouTube thumbnail -->
+      <div class="art-wrap" id="now-art-wrap">
+        <div class="art-bg" id="now-art-bg"></div>
+        <img class="art-img" id="now-art-img" src="" alt="" aria-hidden="true">
+      </div>
+
+      <!-- Housie Number — the hero element -->
+      <div class="np-number-block">
+        <p class="np-number-label">હાઉઝી નંબર</p>
+        <div class="np-number" id="housie-number">૧</div>
+        <p class="np-aliases" id="number-aliases">૧ · ૩૧ · ૬૧</p>
+      </div>
+
+      <!-- Song Details -->
+      <div class="np-details">
+        <h2 class="np-name-gu" id="song-name-gu">લગ જા ગલે</h2>
+        <p class="np-name-hi" id="song-name-hi">लग जा गले</p>
+        <p class="np-singers" id="song-singers">Lata Mangeshkar</p>
+        <p class="np-meta" id="song-meta">Woh Kaun Thi · 1964 · Music: Madan Mohan</p>
+      </div>
+    </section>
+
+    <!-- PLAYER CONTROLS ─────────────────────────────────── -->
+    <section class="controls-section" id="controls-section">
+
+      <!-- Progress -->
+      <div class="progress-area">
+        <div class="progress-track" id="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+          <input type="range" id="progress-bar" class="progress-range"
+            min="0" max="1000" value="0" step="1" aria-label="Song progress">
+        </div>
+        <div class="time-row">
+          <span id="time-current">0:00</span>
+          <span id="time-total">0:00</span>
+        </div>
+      </div>
+
+      <!-- Prev · Play · Next · Random -->
+      <div class="main-controls">
+        <button class="ctrl-btn ctrl-skip" id="btn-prev" aria-label="Previous song">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="4" x2="5" y2="20"/>
+            <polyline points="15 8 9 12 15 16"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn ctrl-play" id="btn-play" aria-label="Play or pause">
+          <svg class="play-icon" id="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7L8 5z"/>
+          </svg>
+          <svg class="play-icon hidden" id="pause-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn ctrl-skip" id="btn-next" aria-label="Next song">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 8 15 12 9 16"/>
+            <line x1="19" y1="4" x2="19" y2="20"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn ctrl-random" id="btn-random" aria-label="Random song">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Volume -->
+      <div class="volume-row">
+        <svg class="vol-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M7 9v6h4l5 5V4l-5 5H7z"/>
+        </svg>
+        <div class="volume-track">
+          <div class="volume-fill" id="volume-fill"></div>
+          <input type="range" id="volume-bar" class="volume-range"
+            min="0" max="100" value="85" aria-label="Volume">
+        </div>
+        <svg class="vol-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </div>
+
+      <p class="status-msg" id="status-msg" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- TRACK LIST ─────────────────────────────────────── -->
+    <section class="tracklist-section">
+      <div class="tracklist-header">
+        <h3 class="tracklist-title">ગીત યાદી</h3>
+        <span class="tracklist-badge">૩૦ ગીત</span>
+      </div>
+      <div class="tracklist" id="song-list" role="list"></div>
+    </section>
+
+    <!-- FOOTER ─────────────────────────────────────────── -->
+    <footer class="footer">
+      <p class="footer-evening" id="event-evening">સંગીતમય સાંજ</p>
+      <p class="footer-label">સંચાલન</p>
+      <p class="footer-hosts" id="event-hosts">
+        જયશ્રી શાહ · હેતલ શાહ · રીના શાહ · સંગીતા શાહ · હીના શાહ · મીતા ફડિયા · હેમલતા શાહ
+      </p>
+      <span id="event-blessing" hidden></span>
+    </footer>
+  </main>
+
+  <!-- ══ Mini Player (replaces old random bar) ══════════ -->
+  <div class="mini-player" id="mini-player">
+    <!-- Thin progress line at top -->
+    <div class="mini-progress-bar">
+      <div class="mini-progress-fill" id="mini-progress-fill"></div>
+    </div>
+    <!-- Player row -->
+    <div class="mini-player-row">
+      <!-- Album art with eq overlay -->
+      <div class="mini-art" aria-hidden="true">
+        <div class="mini-art-bg" id="mini-art-bg"></div>
+        <img class="mini-art-img" id="mini-art-img" src="" alt="">
+        <div class="mini-eq-overlay" id="mini-eq">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <!-- Song info — tap to scroll to full player -->
+      <button class="mini-info" id="mini-info-btn" aria-label="Show full player">
+        <span class="mini-number" id="mini-number">-</span>
+        <span class="mini-name-text" id="mini-name">ગીત</span>
+        <span class="mini-sub-text" id="mini-sub">...</span>
+      </button>
+      <!-- Controls: Random · Prev · Play · Next -->
+      <div class="mini-controls" role="group" aria-label="Mini playback controls">
+        <button class="mini-btn mini-dice" id="mini-random" aria-label="Random song">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+          </svg>
+        </button>
+        <button class="mini-btn" id="mini-prev" aria-label="Previous song">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="4" x2="5" y2="20"/>
+            <polyline points="15 8 9 12 15 16"/>
+          </svg>
+        </button>
+        <button class="mini-btn mini-play-btn" id="mini-play" aria-label="Play or pause">
+          <svg id="mini-play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7L8 5z"/>
+          </svg>
+          <svg id="mini-pause-icon" class="hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+        <button class="mini-btn" id="mini-next" aria-label="Next song">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 8 15 12 9 16"/>
+            <line x1="19" y1="4" x2="19" y2="20"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<audio id="audio-player" preload="metadata"></audio>
+<script src="js/app.js?v=20260629c"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").then(function (reg) {
+      // If a new SW is waiting, activate it immediately
+      if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+      reg.addEventListener("updatefound", function () {
+        var newSW = reg.installing;
+        newSW.addEventListener("statechange", function () {
+          if (newSW.state === "installed" && navigator.serviceWorker.controller) {
+            // New SW installed — reload to apply fresh cache
+            window.location.reload();
+          }
+        });
+      });
+    });
+  }
+</script>
+</body>
+</html>
