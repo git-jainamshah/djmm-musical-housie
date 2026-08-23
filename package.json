@@ -1,7 +1,7 @@
 {
-  "name": "drl-musical-housie",
+  "name": "djmm-musical-housie",
   "version": "1.0.0",
-  "description": "Live song player for DRL Royal Ladies Musical Housie family function",
+  "description": "Live Musical Housie song player for ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
   "private": true,
   "scripts": {
     "download": "python3 scripts/download-songs.py",

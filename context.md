@@ -1,4 +1,4 @@
-# DRL Musical Housie — Project Context
+# DJMM Musical Housie — Project Context
 
 > **Purpose of this file:** Give any AI agent (or developer) full context to understand, run, modify, and deploy this project without prior conversation history.
 
@@ -6,9 +6,9 @@
 
 ## Why This Project Exists
 
-This is a **family function tool** built for the **Shah family** in Gujarat.
+This is an internal event tool built for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.
 
-During a family gathering on **1 July 2026**, the mothers and aunties of the family ("DRL Royal Ladies") will play **Musical Housie** (also called Musical Tambola / Kukuba). Instead of calling numbers 1–90, the host plays Bollywood songs — each song maps to three housie numbers on the players' tickets.
+During the gathering, participants play **Musical Housie** (also called Musical Tambola / Kukuba). Instead of calling numbers 1–90, the host plays Bollywood songs — each song maps to three housie numbers on the players' tickets.
 
 **The problem:** The hosts are not very tech-savvy. They need a dead-simple way to:
 1. Pick a random housie number during the game
@@ -18,7 +18,7 @@ During a family gathering on **1 July 2026**, the mothers and aunties of the fam
 
 **The solution:** A single-page, mobile-first web app that works on a phone connected to speakers. No app install, no login, no build step — just open a URL and tap big buttons.
 
-**Deployment goal:** Host on **GitHub + Vercel** as a static site. Audio files are bundled in the repo (~148 MB) so playback works offline from Vercel's CDN without streaming from YouTube at runtime.
+**Deployment:** Hosted from GitHub on Vercel as a static site. Audio files are bundled in the repository so playback does not stream from YouTube at runtime.
 
 ---
 
@@ -30,12 +30,12 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 |-------|---------------|
 | Blessing | `\|\| શ્રી લોઢણ પાર્શ્વનાથાય નમઃ \|\|` |
 | Evening tagline | `સંગીતમય સાંજ` |
-| Group name | `ડભોઈ રોયેલ લેડીઝ` |
+| Group name | `ડભોઈ જૈન મિત્ર મંડળ - વડોદરા` |
 | Game type | `મ્યુઝિકલ હાઉઝી` |
 | Date | `તારીખ: ૧ જુલાઈ, ૨૦૨૬` |
 | Hosts (સંચાલન) | `જયશ્રી શાહ · હેતલ શાહ · રીના શાહ · સંગીતા શાહ · હીના શાહ · મીતા ફડિયા · હેમલતા શાહ` |
 
-**Source document:** `DRL - Musical Housie A4.pdf` in the project root — the official housie ticket/board PDF in Gujarati with the song list and prize structure.
+**Source document:** `output/pdf/DJMM - Musical Housie A4.pdf` — the housie ticket/board PDF in Gujarati with the song list and prize structure.
 
 ---
 
@@ -71,10 +71,13 @@ The app only handles **song playback and number calling** — prize tracking is 
 ```
 Static site — no framework, no build step, no backend
 ├── HTML shell (index.html)
-├── CSS (css/style.css) — mobile-first, wine/gold theme
+├── CSS (css/style.css) — mobile-first Spotify-inspired dark theme
 ├── Vanilla JS player (js/app.js) — IIFE, no dependencies
 ├── JSON data (data/songs.json) — event metadata + 30 songs
-├── Audio assets (audio/*.m4a) — pre-downloaded from YouTube
+├── Audio assets (audio/*.mp3) — pre-downloaded from YouTube
+├── Album artwork (musical_housie_ablum_pictures/*.jpg)
+├── Service worker (sw.js) — cache-first audio and cache cleanup
+├── Vercel config (vercel.json) — static serving and cache headers
 └── Download script (scripts/download-songs.py) — yt-dlp pipeline
 ```
 
@@ -84,22 +87,24 @@ Static site — no framework, no build step, no backend
 |----------|-----------|
 | **Vanilla JS, no React/Vue** | Zero build step; easy Vercel deploy; minimal complexity for a one-page tool |
 | **Pre-downloaded audio (not YouTube embed)** | Reliable offline playback; no ads; works without internet after first load; hosts don't need YouTube open |
-| **`.m4a` format (not `.mp3`)** | ffmpeg was not available during initial setup; m4a plays fine in all modern mobile browsers |
+| **Pre-bundled `.mp3` files** | Direct browser playback without relying on YouTube during the event |
 | **`data/songs.json` as single source of truth** | Event text, song names (GU/HI/EN), movie, YouTube URL, and audio path all in one file |
 | **Mobile-first UI** | Primary use case is a phone connected to speakers at the function |
 | **Gujarati numeral display** | Housie numbers shown as ૧૨૩ not 123 — matches the physical tickets |
+
+The repository also retains 30 legacy `.m4a` files. The live JSON references only the 30 `.mp3` files; the `.m4a` copies are not loaded by the app.
 
 ### UI Design (Current)
 
 - **Theme:** Spotify dark — `#121212` body, `#181818` surfaces, `#1DB954` green accent
 - **Fonts:** Noto Sans Gujarati + Noto Sans Devanagari (Google Fonts); Cormorant Garamond removed
-- **Layout:** Flex shell with sticky top bar, scrollable main, sticky bottom Random button — max-width 480px
+- **Layout:** Flex shell with a fixed top bar, scrollable main area, and persistent mini-player — max-width 480px
 - **Touch targets:** Play button 64–72px circle, Random button 56px full-width, skip buttons 56px
 - **Safe areas:** `env(safe-area-inset-*)` for iPhone notch/home bar
 - **Progress bar:** Custom 4px green track; 1000-step range input; pointer + touch events for mobile scrubbing
-- **Album art:** Per-song gradient placeholders (30 distinct HSL gradients); no real images needed
-- **Housie number:** Green badge overlaid on album art in now-playing; also shown large in the badge
-- **Song list:** Spotify-style track rows — gradient art square + Gu name + singers/movie + housie nums
+- **Album art:** Local artwork first, YouTube thumbnail fallback, then one of 30 gradient placeholders
+- **Housie number:** Large Gujarati song ID plus its three ticket-number aliases
+- **Song list:** Spotify-style track rows with artwork, Gujarati name, singers/movie, and housie aliases
 
 ### Player Logic (`js/app.js`)
 
@@ -107,18 +112,18 @@ State object:
 ```javascript
 {
   songs: [],              // loaded from songs.json
-  currentHousieNumber: 1, // 1–90
-  playedNumbers: Set(),   // tracks called numbers for random picker
+  currentHousieNumber: 1, // current song ID, effectively 1–30
+  playedNumbers: Set(),   // tracks played song IDs for random picker
   isPlaying: false,
   isSeeking: false        // true while user drags progress bar
 }
 ```
 
 Key functions:
-- `playSongByHousieNumber(n)` — sets number, marks as played, loads audio, plays
-- `pickRandom()` — picks from unplayed numbers 1–90; resets pool when all 90 called
-- `songIndexFromHousieNumber(n)` — maps 1–90 → song id 1–30
-- `toGujaratiNumber(n)` — converts ASCII digits to Gujarati numerals
+- `playSongByHousie(n)` — selects a song ID, marks it played, loads audio, and plays
+- `pickRandom()` — picks from unplayed song IDs 1–30; reuses the full pool after all 30 have played
+- `houseNums(songId)` — maps each song ID to its three ticket numbers
+- `toGu(n)` — converts ASCII digits to Gujarati numerals
 - Progress seeking uses `PROGRESS_MAX = 1000` for fine-grained scrubbing; `isSeeking` flag prevents `timeupdate` from fighting the slider during drag
 
 ### Audio Download Pipeline (`scripts/download-songs.py`)
@@ -126,7 +131,7 @@ Key functions:
 1. Reads `data/songs.json`
 2. For each song, tries YouTube URL → ytsearch fallback by English name → ytsearch by Hindi name
 3. Downloads via **yt-dlp**; uses **certifi** for SSL cert fix on macOS Python
-4. Output: `audio/NN-slug.m4a` (or `.mp3` if ffmpeg installed)
+4. Output: `audio/NN-slug.mp3` when ffmpeg is installed, otherwise `.m4a`
 5. Updates `songs.json` with final audio paths
 
 Run with:
@@ -143,19 +148,21 @@ python3 scripts/download-songs.py
 ## File Structure
 
 ```
-DRL Musical Housie/
+DJMM Musical Housie/
 ├── index.html                  # App shell — header, player, song list, footer
 ├── css/style.css               # All styles (CSS custom properties, no preprocessor)
 ├── js/app.js                   # Player logic (IIFE, ~320 lines)
 ├── data/
 │   └── songs.json              # Event metadata + 30 songs (source of truth)
-├── audio/                      # 30 pre-downloaded song files (~148 MB total)
-│   ├── 01-lag-jaa-gale.m4a
-│   ├── 02-roop-tera-mastana.m4a
+├── audio/                      # Pre-downloaded MP3 files used by the app
+│   ├── 01-lag-jaa-gale.mp3
+│   ├── 02-roop-tera-mastana.mp3
 │   └── ... (through 30)
 ├── scripts/
 │   └── download-songs.py       # yt-dlp download script
-├── DRL - Musical Housie A4.pdf # Original housie PDF (reference only)
+├── output/pdf/
+│   └── DJMM - Musical Housie A4.pdf # Gujarati housie PDF
+├── sw.js                       # Audio-focused service worker
 ├── context.md                  # This file
 ├── README.md                   # User-facing quick start
 ├── package.json                # npm scripts: download, serve
@@ -173,7 +180,7 @@ DRL Musical Housie/
   "event": {
     "blessingGu": "|| શ્રી લોઢણ પાર્શ્વનાથાય નમઃ ||",
     "eveningGu": "સંગીતમય સાંજ",
-    "titleGu": "ડભોઈ રોયેલ લેડીઝ",
+    "titleGu": "ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
     "subtitleGu": "મ્યુઝિકલ હાઉઝી",
     "dateGu": "તારીખ: ૧ જુલાઈ, ૨૦૨૬",
     "hostsGu": "જયશ્રી શાહ · ..."
@@ -260,7 +267,7 @@ npm run serve   # port 3000
 
 ## How to Deploy (Vercel)
 
-1. Ensure `audio/` folder is committed (~148 MB)
+1. Ensure the referenced `audio/*.mp3` files are committed
 2. Push to GitHub
 3. Import on vercel.com — **no build command**, output dir `.`
 4. `vercel.json` sets long cache headers on `/audio/*`

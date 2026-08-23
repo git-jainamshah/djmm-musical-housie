@@ -1,7 +1,7 @@
-// DRL Musical Housie — Service Worker
+// DJMM Musical Housie — Service Worker
 // Bumping CACHE_VERSION forces all browsers to drop old caches on next visit.
-const CACHE_VERSION = "v20260629";
-const CACHE_NAME    = "drl-housie-" + CACHE_VERSION;
+const CACHE_VERSION = "v20260823";
+const CACHE_NAME    = "djmm-housie-" + CACHE_VERSION;
 
 // On install: activate immediately (don't wait for old SW to die)
 self.addEventListener("install", function (e) {

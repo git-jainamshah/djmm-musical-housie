@@ -1,6 +1,6 @@
-# DRL Musical Housie — Live Song Player
+# DJMM Musical Housie — Live Song Player
 
-A simple, one-page web app to play songs live during the **DRL Royal Ladies Musical Housie** family function (1 July 2026).
+A simple, one-page web app to play songs live for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.
 
 Built for easy use — large buttons, Gujarati labels, and a scrollable song list.
 
@@ -8,7 +8,7 @@ Built for easy use — large buttons, Gujarati labels, and a scrollable song lis
 
 - **90 housie numbers** mapped to **30 songs** (each song appears at numbers 1/31/61, 2/32/62, etc.)
 - Large play/pause, previous, and next controls
-- **Random number** picker for housie calling
+- **Random song** picker that avoids repeats until all 30 songs have played
 - Full song list — tap any song to play
 - Gujarati number display
 - Works on phone, tablet, and laptop
@@ -86,4 +86,4 @@ npm run serve
 
 ---
 
-Made with ❤️ for the Shah family function.
+Made with ❤️ for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.

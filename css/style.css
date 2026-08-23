@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   DRL Musical Housie — Premium Spotify Dark Theme v3
+   DJMM Musical Housie — Premium Spotify Dark Theme v3
    ═══════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -152,15 +152,13 @@ body {
 
 .top-title {
   font-family: 'Anek Gujarati', 'Noto Sans Gujarati', sans-serif;
-  font-size: 1.22rem;
-  font-weight: 200;
+  font-size: clamp(0.86rem, 3.5vw, 1.05rem);
+  font-weight: 300;
   color: var(--white);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
   display: block;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
 }
 
 .top-subtitle-row {

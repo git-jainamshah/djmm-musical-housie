@@ -1,5 +1,5 @@
 #!/bin/bash
-# DRL Musical Housie — Audio Download
+# DJMM Musical Housie — Audio Download
 # Double-click this file in Finder to run.
 # Uses your Chrome cookies to bypass YouTube bot detection.
 

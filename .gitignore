@@ -3,6 +3,7 @@ node_modules/
 *.log
 .env
 .env.*
+tmp/
 
 # Python download script and deps — NOT needed on Vercel, keep out of repo
 requirements.txt

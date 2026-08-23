@@ -1,11 +1,11 @@
 #!/bin/bash
-# DRL Musical Housie — Push audio files to GitHub
+# DJMM Musical Housie — Push audio files to GitHub
 # Double-click this in Finder to run.
 
 cd "$(dirname "$0")"
 
 echo "===================================="
-echo "  DRL Musical Housie — Audio Push"
+echo "  DJMM Musical Housie — Audio Push"
 echo "===================================="
 echo ""
 echo "Fixing git index if needed..."
