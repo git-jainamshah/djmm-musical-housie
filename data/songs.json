@@ -334,16 +334,17 @@
     },
     {
       "id": 26,
-      "nameGu": "ચોલી કે પીછે",
-      "nameHi": "चोली के पीछे",
-      "nameEn": "Choli Ke Peeche",
-      "movie": "Khal Nayak",
-      "year": 1993,
-      "singers": "Alka Yagnik & Ila Arun",
-      "musicBy": "Laxmikant-Pyarelal",
-      "image": "musical_housie_ablum_pictures/song_26_choli_ke_peeche.jpg",
-      "youtube": "https://www.youtube.com/watch?v=3OXiqmUhB70",
-      "audio": "audio/26-choli-ke-peeche.mp3"
+      "nameGu": "ઐંવઈ ઐંવઈ",
+      "nameHi": "ऐंवई ऐंवई",
+      "nameEn": "Ainvayi Ainvayi",
+      "movie": "Band Baaja Baaraat",
+      "year": 2010,
+      "singers": "Salim Merchant & Sunidhi Chauhan",
+      "musicBy": "Salim-Sulaiman",
+      "image": "",
+      "youtube": "https://www.youtube.com/watch?v=pElk1ShPrcE",
+      "audio": "",
+      "audioPending": true
     },
     {
       "id": 27,

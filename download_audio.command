@@ -72,7 +72,7 @@ dl 22  "22-aap-ki-nazron-ne"        "https://youtu.be/Wv-VlQMD0VY"   "Aap Ki Naz
 dl 23  "23-hawa-hawai"              "https://youtu.be/IgKdXLfxgQQ"   "Hawa Hawai"
 dl 24  "24-jumma-chumma-de-de"      "https://youtu.be/5gTToFIZp-g"   "Jumma Chumma De De"
 dl 25  "25-ye-kaali-kaali-aankhen"  "https://youtu.be/KC-DuX51NY0"   "Ye Kaali Kaali Aankhen"
-dl 26  "26-choli-ke-peeche"         "https://youtu.be/3OXiqmUhB70"   "Choli Ke Peeche"
+dl 26  "26-ainvayi-ainvayi"         "https://youtu.be/pElk1ShPrcE"   "Ainvayi Ainvayi"
 dl 27  "27-didi-tera-devar"         "https://youtu.be/ZqcDGvCM_w0"   "Didi Tera Devar"
 dl 28  "28-jo-haal-dil-ka"          "https://youtu.be/Y9OnEE7FAcc"   "Jo Haal Dil Ka"
 dl 29  "29-mere-khwabon-mein-jo"    "https://youtu.be/s1LozokQjIg"   "Mere Khwabon Mein Jo"
