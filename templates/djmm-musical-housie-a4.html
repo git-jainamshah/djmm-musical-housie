@@ -134,19 +134,34 @@
       font-weight: 700;
     }
     .prize-grid {
-      height: 27mm;
+      height: 30mm;
       padding: 1.5mm 4mm;
       border: 0.35mm solid #3b3834;
       border-top: 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.4mm 15mm;
+      row-gap: 1.2mm;
+      column-gap: 15mm;
       font-size: 10pt;
       line-height: 1.15;
       font-weight: 500;
     }
-    .prize { display: flex; align-items: center; justify-content: space-between; gap: 3mm; }
-    .prize b { font-weight: 700; }
+    .prize {
+      display: grid;
+      grid-template-columns: auto minmax(8mm, 1fr) auto;
+      align-items: center;
+      column-gap: 1mm;
+    }
+    .prize::before {
+      content: "";
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      border-bottom: 0.3mm dotted #8d8882;
+      transform: translateY(0.6mm);
+    }
+    .prize > span { grid-column: 1; grid-row: 1; }
+    .prize b { grid-column: 3; grid-row: 1; font-weight: 700; }
     .name-line {
       margin-top: 2.5mm;
       height: 6.5mm;
