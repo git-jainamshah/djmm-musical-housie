@@ -8,13 +8,13 @@
 
 This is an internal event tool built for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.
 
-During the gathering, participants play **Musical Housie** (also called Musical Tambola / Kukuba). Instead of calling numbers 1–90, the host plays Bollywood songs — each song maps to three housie numbers on the players' tickets.
+During the gathering, participants play **Musical Housie** (also called Musical Tambola / Kukuba). Instead of calling numbers 1–90, the host plays Bollywood songs — each song maps to two housie numbers on the players' tickets.
 
 **The problem:** The hosts are not very tech-savvy. They need a dead-simple way to:
 1. Pick a random housie number during the game
 2. Play the correct song instantly through speakers
 3. See which song is playing and navigate forward/backward
-4. Browse the full list of 30 songs if needed
+4. Browse the full list of 45 songs if needed
 
 **The solution:** A single-page, mobile-first web app that works on a phone connected to speakers. No app install, no login, no build step — just open a URL and tap big buttons.
 
@@ -33,7 +33,6 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 | Group name | `ડભોઈ જૈન મિત્ર મંડળ - વડોદરા` |
 | Game type | `મ્યુઝિકલ હાઉઝી` |
 | Date | `તારીખ: ૧ જુલાઈ, ૨૦૨૬` |
-| Hosts (સંચાલન) | `જયશ્રી શાહ · હેતલ શાહ · રીના શાહ · સંગીતા શાહ · હીના શાહ · મીતા ફડિયા · હેમલતા શાહ` |
 
 **Source document:** `output/pdf/DJMM - Musical Housie A4.pdf` — the housie ticket/board PDF in Gujarati with the song list and prize structure.
 
@@ -41,16 +40,16 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 
 ## How Musical Housie Works (Game Rules)
 
-Standard 90-number housie, but numbers are replaced by **30 unique Bollywood songs**. Each song appears on **three numbers**:
+Standard 90-number housie, but numbers are replaced by **45 songs**. Each song appears on **two numbers**:
 
 ```
-Song 1  → numbers  1, 31, 61
-Song 2  → numbers  2, 32, 62
+Song 1  → numbers  1, 46
+Song 2  → numbers  2, 47
 ...
-Song 30 → numbers 30, 60, 90
+Song 45 → numbers 45, 90
 ```
 
-Formula: `songId = ((housieNumber - 1) % 30) + 1`
+Formula: `songId = ((housieNumber - 1) % 45) + 1`
 
 **Prize categories** (from PDF, for reference — not implemented in the app):
 - પહેલાં ૫ (First 5) × 2
@@ -73,7 +72,7 @@ Static site — no framework, no build step, no backend
 ├── HTML shell (index.html)
 ├── CSS (css/style.css) — mobile-first Spotify-inspired dark theme
 ├── Vanilla JS player (js/app.js) — IIFE, no dependencies
-├── JSON data (data/songs.json) — event metadata + 30 songs
+├── JSON data (data/songs.json) — event metadata + 45 songs
 ├── Audio assets (audio/*.mp3) — pre-downloaded from YouTube
 ├── Album artwork (musical_housie_ablum_pictures/*.jpg)
 ├── Service worker (sw.js) — cache-first audio and cache cleanup
@@ -92,7 +91,7 @@ Static site — no framework, no build step, no backend
 | **Mobile-first UI** | Primary use case is a phone connected to speakers at the function |
 | **Gujarati numeral display** | Housie numbers shown as ૧૨૩ not 123 — matches the physical tickets |
 
-The repository also retains 30 legacy `.m4a` files. The live JSON references only the 30 `.mp3` files; the `.m4a` copies are not loaded by the app.
+The original 30 songs have playable `.mp3` files. Songs 31–45 are fully mapped but intentionally have `audioPending: true` and blank audio paths until their media is selected. The repository also retains 30 legacy `.m4a` files that are not loaded by the app.
 
 ### UI Design (Current)
 
@@ -102,8 +101,8 @@ The repository also retains 30 legacy `.m4a` files. The live JSON references onl
 - **Touch targets:** Play button 64–72px circle, Random button 56px full-width, skip buttons 56px
 - **Safe areas:** `env(safe-area-inset-*)` for iPhone notch/home bar
 - **Progress bar:** Custom 4px green track; 1000-step range input; pointer + touch events for mobile scrubbing
-- **Album art:** Local artwork first, YouTube thumbnail fallback, then one of 30 gradient placeholders
-- **Housie number:** Large Gujarati song ID plus its three ticket-number aliases
+- **Album art:** Local artwork first, YouTube thumbnail fallback, then a cycling gradient placeholder
+- **Housie number:** Large Gujarati song ID plus its two ticket-number aliases
 - **Song list:** Spotify-style track rows with artwork, Gujarati name, singers/movie, and housie aliases
 
 ### Player Logic (`js/app.js`)
@@ -112,7 +111,7 @@ State object:
 ```javascript
 {
   songs: [],              // loaded from songs.json
-  currentHousieNumber: 1, // current song ID, effectively 1–30
+  currentHousieNumber: 1, // current song ID, 1–45
   playedNumbers: Set(),   // tracks played song IDs for random picker
   isPlaying: false,
   isSeeking: false        // true while user drags progress bar
@@ -121,8 +120,8 @@ State object:
 
 Key functions:
 - `playSongByHousie(n)` — selects a song ID, marks it played, loads audio, and plays
-- `pickRandom()` — picks from unplayed song IDs 1–30; reuses the full pool after all 30 have played
-- `houseNums(songId)` — maps each song ID to its three ticket numbers
+- `pickRandom()` — picks from unplayed song IDs 1–45; reuses the full pool after all 45 have been selected
+- `houseNums(songId)` — maps each song ID to `[songId, songId + 45]`
 - `toGu(n)` — converts ASCII digits to Gujarati numerals
 - Progress seeking uses `PROGRESS_MAX = 1000` for fine-grained scrubbing; `isSeeking` flag prevents `timeupdate` from fighting the slider during drag
 
@@ -153,7 +152,7 @@ DJMM Musical Housie/
 ├── css/style.css               # All styles (CSS custom properties, no preprocessor)
 ├── js/app.js                   # Player logic (IIFE, ~320 lines)
 ├── data/
-│   └── songs.json              # Event metadata + 30 songs (source of truth)
+│   └── songs.json              # Event metadata + 45 songs (source of truth)
 ├── audio/                      # Pre-downloaded MP3 files used by the app
 │   ├── 01-lag-jaa-gale.mp3
 │   ├── 02-roop-tera-mastana.mp3
@@ -182,8 +181,7 @@ DJMM Musical Housie/
     "eveningGu": "સંગીતમય સાંજ",
     "titleGu": "ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
     "subtitleGu": "મ્યુઝિકલ હાઉઝી",
-    "dateGu": "તારીખ: ૧ જુલાઈ, ૨૦૨૬",
-    "hostsGu": "જયશ્રી શાહ · ..."
+    "dateGu": "તારીખ: ૧ જુલાઈ, ૨૦૨૬"
   },
   "songs": [
     {
@@ -193,7 +191,7 @@ DJMM Musical Housie/
       "nameEn": "Lag Jaa Gale",
       "movie": "Woh Kaun Thi",
       "youtube": "https://www.youtube.com/watch?v=...",
-      "audio": "audio/01-lag-jaa-gale.m4a"
+      "audio": "audio/01-lag-jaa-gale.mp3"
     }
   ]
 }
@@ -201,38 +199,53 @@ DJMM Musical Housie/
 
 ### Full Song List (PDF Order)
 
-| ID | Gujarati | English | Movie | Housie Numbers |
-|----|----------|---------|-------|----------------|
-| 1 | લગ જા ગલે | Lag Jaa Gale | Woh Kaun Thi | 1, 31, 61 |
-| 2 | રૂપ તેરા મસ્તાના | Roop Tera Mastana | Aradhana | 2, 32, 62 |
-| 3 | પલ પલ દિલ કે પાસ | Pal Pal Dil Ke Paas | Blackmail | 3, 33, 63 |
-| 4 | ચુરા લિયા હૈ તુમને | Chura Liya Hai Tumne | Yaadon Ki Baaraat | 4, 34, 64 |
-| 5 | દમ મારો દમ | Dum Maaro Dum | Hare Rama Hare Krishna | 5, 35, 65 |
-| 6 | મેરે સપનો કી રાની | Mere Sapnon Ki Rani | Aradhana | 6, 36, 66 |
-| 7 | યે દોસ્તી હમ નહીં | Ye Dosti Hum Nahin | Sholay | 7, 37, 67 |
-| 8 | એક દો તીન | Ek Do Teen | Tezaab | 8, 38, 68 |
-| 9 | તુઝે દેખા તો | Tujhe Dekha To | DDLJ | 9, 39, 69 |
-| 10 | પહેલા નશા | Pehla Nasha | Jo Jeeta Wohi Sikandar | 10, 40, 70 |
-| 11 | આજ કલ તેરે મેરે પ્યાર | Aaj Kal Tere Mere Pyar | Purab Aur Paschim | 11, 41, 71 |
-| 12 | ગુલાબી આંખો | Gulabi Aankhen | The Train | 12, 42, 72 |
-| 13 | એ મેરે દિલ કે ચૈન | Aye Mere Dil Ke Chain | Mere Jeevan Saathi | 13, 43, 73 |
-| 14 | એક લડકી કો દેખા | Ek Ladki Ko Dekha | 1942: A Love Story | 14, 44, 74 |
-| 15 | દિલ દિવાના | Dil Deewana | Maine Pyaar Kiya | 15, 45, 75 |
-| 16 | કભી કભી મેરે દિલ | Kabhi Kabhi Mere Dil Mein | Kabhi Kabhie | 16, 46, 76 |
-| 17 | મેહંદી લગા કે રખના | Mehndi Laga Ke Rakhna | DDLJ | 17, 47, 77 |
-| 18 | છૈયા છૈયા | Chaiyya Chaiyya | Dil Se | 18, 48, 78 |
-| 19 | યાર બના ચૈન | Yaar Bina Chain Kahan Re | Saaheb | 19, 49, 79 |
-| 20 | ડિલ દો દવાને | Dil Do Na | Heyy Babyy | 20, 50, 80 |
-| 21 | ખઈકે પાન બનારસ | Khaike Paan Banaras Wala | Don | 21, 51, 81 |
-| 22 | આપ કે નજરોને | Aap Ke Nazron Ne | An Evening in Paris | 22, 52, 82 |
-| 23 | હવા હવાઈ | Hawa Hawai | Mr. India | 23, 53, 83 |
-| 24 | જુમ્મા ચુમ્મા દે દે | Jumma Chumma De De | Hum | 24, 54, 84 |
-| 25 | યે કાલી કાલી આંખો | Ye Kaali Kaali Aankhen | Baazigar | 25, 55, 85 |
-| 26 | ચોલી કે પીછે | Choli Ke Peeche | Khal Nayak | 26, 56, 86 |
-| 27 | દીદી તેરા દેવર | Didi Tera Devar Deewana | HAHK | 27, 57, 87 |
-| 28 | જો હાલ દિલ કા | Jo Haal Dil Ka | Sarfarosh | 28, 58, 88 |
-| 29 | મેરે ખ્વાબો મે જો | Mere Khwabon Mein Jo | DDLJ | 29, 59, 89 |
-| 30 | લૈલા મૈ લૈલા | Laila Main Laila | Qurbani | 30, 60, 90 |
+| ID | Gujarati | Housie Numbers | Audio |
+|----|----------|----------------|-------|
+| 1 | લગ જા ગલે | 1, 46 | Ready |
+| 2 | રૂપ તેરા મસ્તાના | 2, 47 | Ready |
+| 3 | પલ પલ દિલ કે પાસ | 3, 48 | Ready |
+| 4 | ચુરા લિયા હૈ તુમને | 4, 49 | Ready |
+| 5 | દમ મારો દમ | 5, 50 | Ready |
+| 6 | મેરે સપનોં કી રાની | 6, 51 | Ready |
+| 7 | યે દોસ્તી હમ નહીં તોડેંગે | 7, 52 | Ready |
+| 8 | એક દો તીન | 8, 53 | Ready |
+| 9 | તુઝે દેખા તો | 9, 54 | Ready |
+| 10 | પહેલા નશા | 10, 55 | Ready |
+| 11 | આજ કલ તેરે મેરે પ્યાર | 11, 56 | Ready |
+| 12 | ગુલાબી આંખેં | 12, 57 | Ready |
+| 13 | ઓ મેરે દિલ કે ચૈન | 13, 58 | Ready |
+| 14 | એક લડકી કો દેખા | 14, 59 | Ready |
+| 15 | દિલ દીવાના | 15, 60 | Ready |
+| 16 | કભી કભી મેરે દિલ | 16, 61 | Ready |
+| 17 | મેહંદી લગા કે રખના | 17, 62 | Ready |
+| 18 | છૈયા છૈયા | 18, 63 | Ready |
+| 19 | યાર બિના ચૈન | 19, 64 | Ready |
+| 20 | ડિસ્કો દીવાને | 20, 65 | Ready |
+| 21 | ખાઈ કે પાન બનારસ | 21, 66 | Ready |
+| 22 | આપ કી નજરોં ને | 22, 67 | Ready |
+| 23 | હવા હવાઈ | 23, 68 | Ready |
+| 24 | જુમ્મા ચુમ્મા દે દે | 24, 69 | Ready |
+| 25 | યે કાલી કાલી આંખેં | 25, 70 | Ready |
+| 26 | ચોલી કે પીછે | 26, 71 | Ready |
+| 27 | દીદી તેરા દેવર | 27, 72 | Ready |
+| 28 | જો હાલ દિલ કા | 28, 73 | Ready |
+| 29 | મેરે ખ્વાબોં મેં જો | 29, 74 | Ready |
+| 30 | લૈલા મૈં લૈલા | 30, 75 | Ready |
+| 31 | જવાની જાનેમન | 31, 76 | Pending |
+| 32 | હરિ ઓમ હરિ | 32, 77 | Pending |
+| 33 | કોઈ યહાં નાચે નાચે | 33, 78 | Pending |
+| 34 | મહેબૂબા મહેબૂબા | 34, 79 | Pending |
+| 35 | જબ છાયે મેરા જાદુ | 35, 80 | Pending |
+| 36 | કાલા ચશ્મા | 36, 81 | Pending |
+| 37 | હાયો રબ્બા | 37, 82 | Pending |
+| 38 | તુને મારી એન્ટ્રી | 38, 83 | Pending |
+| 39 | હેલો યેલો | 39, 84 | Pending |
+| 40 | કોઈ કહે કહેતા રહે | 40, 85 | Pending |
+| 41 | મલ્હારી | 41, 86 | Pending |
+| 42 | મે સે મીના શાના સાકી લે | 42, 87 | Pending |
+| 43 | છોગાળા તારા | 43, 88 | Pending |
+| 44 | આંખ મારે | 44, 89 | Pending |
+| 45 | સોન્ગ ૧ | 45, 90 | Pending |
 
 ---
 
@@ -307,6 +320,7 @@ Edit CSS custom properties in `:root` at top of `css/style.css`:
 | **Gujarati text correction** | User provided accurate event copy → updated `songs.json` event block and HTML fallbacks |
 | **Context doc** | This file created for AI/developer handoff |
 | **Spotify redesign + album details** | Full UI rebuild: Spotify dark theme (`#121212`, `#1DB954` green), sticky top bar + scrollable content + sticky Random button at bottom. Added `singers`, `musicBy`, `year` fields to all 30 songs in `songs.json`. Song list uses Spotify-style track rows with per-song gradient art placeholders. Big housie number badge overlays album art. Now-playing shows singers + music director. |
+| **45-song architecture** | Remapped 1–90 into 45 two-number pairs (`n`, `n + 45`), added songs 31–44 plus placeholder song 45, introduced audio-pending UI states, and removed the hosts section. |
 
 ---
 

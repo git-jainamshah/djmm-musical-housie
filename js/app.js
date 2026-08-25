@@ -4,6 +4,9 @@
   // ── Constants ─────────────────────────────────────
   const GUJARATI_DIGITS = ["૦", "૧", "૨", "૩", "૪", "૫", "૬", "૭", "૮", "૯"];
   const PROGRESS_MAX    = 1000;
+  const SONG_COUNT      = 45;
+  const NUMBER_OFFSET   = 45;
+  const AUDIO_PENDING_GU = "ઑડિયો બાકી છે";
 
   // ── State ─────────────────────────────────────────
   const state = {
@@ -24,7 +27,7 @@
     eventTitle:    el("event-title"),
     eventSubtitle: el("event-subtitle"),
     eventDate:     el("event-date"),
-    eventHosts:    el("event-hosts"),
+    tracklistBadge:el("tracklist-badge"),
 
     // Now-playing
     nowArtBg:     el("now-art-bg"),
@@ -105,7 +108,7 @@
   ];
 
   function songGradient(id) {
-    const [h1, h2] = GRADIENT_HUES[(id - 1) % 30];
+    const [h1, h2] = GRADIENT_HUES[(id - 1) % GRADIENT_HUES.length];
     return "linear-gradient(135deg, hsl(" + h1 + ",60%,18%) 0%, hsl(" + h2 + ",72%,38%) 100%)";
   }
 
@@ -123,9 +126,10 @@
     return Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
   }
 
-  function songIdFromHousie(n) { return ((n - 1) % 30) + 1; }
-  function houseNums(songId)    { return [songId, songId + 30, songId + 60]; }
+  function songIdFromHousie(n) { return ((n - 1) % SONG_COUNT) + 1; }
+  function houseNums(songId)    { return [songId, songId + NUMBER_OFFSET]; }
   function currentSong()        { return state.songs.find(function (s) { return s.id === songIdFromHousie(state.currentHousieNumber); }); }
+  function hasAudio(song)       { return Boolean(song && song.audio); }
   function duration()           { const d = els.audio.duration; return isFinite(d) && d > 0 ? d : 0; }
   function setStatus(m)         { setTxt(els.statusMsg, m || ""); }
 
@@ -214,7 +218,9 @@
     // Info
     setTxt(els.miniNumber, toGu(song.id));
     setTxt(els.miniName,   song.nameGu);
-    setTxt(els.miniSub,    (song.singers || "") + (song.movie ? " · " + song.movie : ""));
+    setTxt(els.miniSub,    hasAudio(song)
+      ? (song.singers || "") + (song.movie ? " · " + song.movie : "")
+      : AUDIO_PENDING_GU);
 
     // Play/pause icons
     if (els.miniPlayIcon)  els.miniPlayIcon.classList.toggle("hidden",  playing);
@@ -229,11 +235,11 @@
     setTxt(els.housieNumber,  toGu(song.id));
     setTxt(els.numberAliases, houseNums(song.id).map(toGu).join(" · "));
     setTxt(els.songNameGu,    song.nameGu);
-    setTxt(els.songNameHi,    song.nameHi);
-    setTxt(els.songSingers,   song.singers || "");
+    setTxt(els.songNameHi,    song.nameHi || "");
+    setTxt(els.songSingers,   hasAudio(song) ? (song.singers || "") : AUDIO_PENDING_GU);
 
     const metaParts = [song.movie, song.year, song.musicBy ? "Music: " + song.musicBy : ""].filter(Boolean);
-    setTxt(els.songMeta, metaParts.join(" · "));
+    setTxt(els.songMeta, hasAudio(song) ? metaParts.join(" · ") : "વિગતો પછી ઉમેરાશે");
 
     updateArt(song);
     updateMiniPlayer();
@@ -252,6 +258,7 @@
       const nums      = houseNums(song.id).map(toGu).join("·");
       const grad    = songGradient(song.id);
       const artUrl  = getArtUrl(song, "mqdefault");
+      const pending = !hasAudio(song);
 
       // Animated eq bars when active + playing, else number
       const idxHTML = (isActive && playing)
@@ -266,16 +273,16 @@
 
       const btn = document.createElement("button");
       btn.type      = "button";
-      btn.className = "song-item" + (isActive ? " active" : "") + (allPlayed ? " played" : "");
+      btn.className = "song-item" + (isActive ? " active" : "") + (allPlayed ? " played" : "") + (pending ? " pending" : "");
       btn.setAttribute("role", "listitem");
-      btn.setAttribute("aria-label", song.nameGu);
+      btn.setAttribute("aria-label", song.nameGu + (pending ? " · " + AUDIO_PENDING_GU : ""));
 
       btn.innerHTML =
         '<span class="song-item-idx">' + idxHTML + '</span>' +
         '<span class="song-item-art" style="' + artStyle + '" aria-hidden="true"></span>' +
         '<span class="song-item-info">' +
           '<span class="song-item-name">' + song.nameGu + '</span>' +
-          '<span class="song-item-sub">' + (song.singers || "") + (song.movie ? " · " + song.movie : "") + '</span>' +
+          '<span class="song-item-sub">' + (pending ? AUDIO_PENDING_GU : (song.singers || "") + (song.movie ? " · " + song.movie : "")) + '</span>' +
         '</span>' +
         '<span class="song-item-nums">' + nums + '</span>';
 
@@ -299,16 +306,29 @@
 
   function loadAudio(song) {
     resetProgress();
+    if (!hasAudio(song)) {
+      els.audio.pause();
+      els.audio.removeAttribute("src");
+      els.audio.load();
+      return false;
+    }
     els.audio.src = song.audio;
     els.audio.load();
+    return true;
   }
 
   function playSongByHousie(num) {
     state.currentHousieNumber = num;
     state.playedNumbers.add(num);
     const song = currentSong();
-    loadAudio(song);
+    const audioReady = loadAudio(song);
     updateDisplay();
+    if (!audioReady) {
+      state.isPlaying = false;
+      updatePlayBtn();
+      setStatus(AUDIO_PENDING_GU + " · " + song.nameGu);
+      return;
+    }
     els.audio.play()
       .then(function () {
         state.isPlaying = true;
@@ -325,6 +345,12 @@
   function playSongById(id) { playSongByHousie(id); }
 
   function togglePlay() {
+    if (!hasAudio(currentSong())) {
+      state.isPlaying = false;
+      updatePlayBtn();
+      setStatus(AUDIO_PENDING_GU + " · " + currentSong().nameGu);
+      return;
+    }
     if (!els.audio.src) { playSongByHousie(state.currentHousieNumber); return; }
     if (els.audio.paused) {
       els.audio.play();
@@ -352,16 +378,16 @@
   }
 
   function goNext() {
-    playSongByHousie(state.currentHousieNumber >= 30 ? 1 : state.currentHousieNumber + 1);
+    playSongByHousie(state.currentHousieNumber >= SONG_COUNT ? 1 : state.currentHousieNumber + 1);
   }
   function goPrev() {
-    playSongByHousie(state.currentHousieNumber <= 1 ? 30 : state.currentHousieNumber - 1);
+    playSongByHousie(state.currentHousieNumber <= 1 ? SONG_COUNT : state.currentHousieNumber - 1);
   }
 
   function pickRandom() {
     const unplayed = [];
-    for (let i = 1; i <= 30; i++) if (!state.playedNumbers.has(i)) unplayed.push(i);
-    const pool = unplayed.length ? unplayed : Array.from({ length: 30 }, function (_, i) { return i + 1; });
+    for (let i = 1; i <= SONG_COUNT; i++) if (!state.playedNumbers.has(i)) unplayed.push(i);
+    const pool = unplayed.length ? unplayed : Array.from({ length: SONG_COUNT }, function (_, i) { return i + 1; });
     const pick  = pool[Math.floor(Math.random() * pool.length)];
     playSongByHousie(pick);
     setStatus("🎲 " + toGu(pick) + " · " + (currentSong() || {}).nameGu);
@@ -467,10 +493,10 @@
         setTxt(els.eventTitle,    ev.titleGu);
         setTxt(els.eventSubtitle, ev.subtitleGu);
         setTxt(els.eventDate,     ev.dateGu);
-        setTxt(els.eventHosts,    ev.hostsGu);
       }
 
       state.songs = data.songs;
+      setTxt(els.tracklistBadge, toGu(state.songs.length) + " ગીત");
       setupVolumeUI();
       loadAudio(currentSong());
       updateDisplay();

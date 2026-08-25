@@ -700,6 +700,7 @@ body {
   text-overflow: ellipsis;
 }
 .song-item.active .song-item-name { color: var(--green); }
+.song-item.pending .song-item-sub { color: #d9a441; }
 
 .song-item-sub {
   font-size: 0.72rem;
@@ -731,18 +732,6 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--sub);
-  margin-bottom: 6px;
-}
-.footer-label {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-.footer-hosts {
-  font-size: 0.75rem;
-  color: var(--sub);
-  line-height: 1.9;
 }
 
 /* ─── Mini Player ─────────────────────────────────── */

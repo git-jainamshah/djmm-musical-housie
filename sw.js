@@ -1,6 +1,6 @@
 // DJMM Musical Housie — Service Worker
 // Bumping CACHE_VERSION forces all browsers to drop old caches on next visit.
-const CACHE_VERSION = "v20260823";
+const CACHE_VERSION = "v20260824";
 const CACHE_NAME    = "djmm-housie-" + CACHE_VERSION;
 
 // On install: activate immediately (don't wait for old SW to die)

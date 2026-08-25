@@ -6,9 +6,9 @@ Built for easy use — large buttons, Gujarati labels, and a scrollable song lis
 
 ## Features
 
-- **90 housie numbers** mapped to **30 songs** (each song appears at numbers 1/31/61, 2/32/62, etc.)
+- **90 housie numbers** mapped to **45 songs** (each song appears at two numbers: 1/46, 2/47, etc.)
 - Large play/pause, previous, and next controls
-- **Random song** picker that avoids repeats until all 30 songs have played
+- **Random song** picker that avoids repeats until all 45 songs have been selected
 - Full song list — tap any song to play
 - Gujarati number display
 - Works on phone, tablet, and laptop
@@ -24,7 +24,9 @@ pip install yt-dlp
 brew install ffmpeg   # macOS
 ```
 
-Then download all 30 songs from official YouTube links:
+The original 30 songs already have audio. Songs 31–45 are mapped in the UI and currently marked as audio pending.
+
+To download or refresh mapped audio later:
 
 ```bash
 npm run download
@@ -55,14 +57,15 @@ npm run serve
 | Build Command | *(leave empty)* |
 | Output Dir    | `.`          |
 
-## Song List (30 songs, PDF order)
+## Song List (45 songs, PDF order)
 
 | # | Song (Gujarati) | Numbers |
 |---|-----------------|---------|
-| 1 | લગ જા ગલે | 1, 31, 61 |
-| 2 | રૂપ તેરા મસ્તાના | 2, 32, 62 |
+| 1 | લગ જા ગલે | 1, 46 |
+| 2 | રૂપ તેરા મસ્તાના | 2, 47 |
 | ... | *(see data/songs.json)* | ... |
-| 30 | લૈલા મૈ લૈલા | 30, 60, 90 |
+| 30 | લૈલા મૈં લૈલા | 30, 75 |
+| 45 | સોન્ગ ૧ | 45, 90 |
 
 ## Project Structure
 
