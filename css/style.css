@@ -225,6 +225,7 @@ body {
 
 /* Restart button */
 .restart-btn {
+  position: relative;
   flex-shrink: 0;
   background: transparent;
   border: none;
@@ -240,6 +241,46 @@ body {
 }
 .restart-btn svg { width: 40px; height: 40px; display: block; }
 .restart-btn:active { transform: scale(0.90); filter: brightness(0.85); }
+
+.restart-tooltip {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  width: max-content;
+  max-width: 160px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 8px;
+  background: #282828;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.42);
+  color: var(--white);
+  font-family: var(--font-gu);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-3px);
+  transition: opacity 0.15s, visibility 0.15s, transform 0.15s;
+  pointer-events: none;
+}
+
+.restart-tooltip::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: 100%;
+  border: 5px solid transparent;
+  border-bottom-color: #282828;
+}
+
+.restart-btn:hover .restart-tooltip,
+.restart-btn:focus-visible .restart-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
 /* ─── App Dialogs ─────────────────────────────────── */
 .app-dialog {
