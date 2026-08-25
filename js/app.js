@@ -215,9 +215,8 @@
     // Info
     setTxt(els.miniNumber, toGu(song.id));
     setTxt(els.miniName,   song.nameGu);
-    setTxt(els.miniSub,    hasAudio(song)
-      ? (song.singers || "") + (song.movie ? " · " + song.movie : "")
-      : AUDIO_PENDING_GU);
+    const miniDetails = (song.singers || "") + (song.movie ? " · " + song.movie : "");
+    setTxt(els.miniSub, miniDetails || AUDIO_PENDING_GU);
 
     // Play/pause icons
     if (els.miniPlayIcon)  els.miniPlayIcon.classList.toggle("hidden",  playing);
@@ -233,10 +232,10 @@
     setTxt(els.numberAliases, houseNums(song.id).map(toGu).join(" · "));
     setTxt(els.songNameGu,    song.nameGu);
     setTxt(els.songNameHi,    song.nameHi || "");
-    setTxt(els.songSingers,   hasAudio(song) ? (song.singers || "") : AUDIO_PENDING_GU);
+    setTxt(els.songSingers,   song.singers || AUDIO_PENDING_GU);
 
     const metaParts = [song.movie, song.year, song.musicBy ? "Music: " + song.musicBy : ""].filter(Boolean);
-    setTxt(els.songMeta, hasAudio(song) ? metaParts.join(" · ") : "વિગતો પછી ઉમેરાશે");
+    setTxt(els.songMeta, metaParts.length ? metaParts.join(" · ") : "વિગતો પછી ઉમેરાશે");
 
     updateArt(song);
     updateMiniPlayer();
@@ -279,7 +278,7 @@
         '<span class="song-item-art" style="' + artStyle + '" aria-hidden="true"></span>' +
         '<span class="song-item-info">' +
           '<span class="song-item-name">' + song.nameGu + '</span>' +
-          '<span class="song-item-sub">' + (pending ? AUDIO_PENDING_GU : (song.singers || "") + (song.movie ? " · " + song.movie : "")) + '</span>' +
+          '<span class="song-item-sub">' + (((song.singers || "") + (song.movie ? " · " + song.movie : "")) || AUDIO_PENDING_GU) + '</span>' +
         '</span>' +
         '<span class="song-item-nums">' + nums + '</span>';
 
