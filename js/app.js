@@ -22,11 +22,8 @@
 
   const els = {
     // Event info
-    eventBlessing: el("event-blessing"),
-    eventEvening:  el("event-evening"),
     eventTitle:    el("event-title"),
     eventSubtitle: el("event-subtitle"),
-    eventDate:     el("event-date"),
     tracklistBadge:el("tracklist-badge"),
 
     // Now-playing
@@ -488,11 +485,8 @@
 
       if (data.event) {
         const ev = data.event;
-        setTxt(els.eventBlessing, ev.blessingGu);
-        setTxt(els.eventEvening,  ev.eveningGu);
         setTxt(els.eventTitle,    ev.titleGu);
         setTxt(els.eventSubtitle, ev.subtitleGu);
-        setTxt(els.eventDate,     ev.dateGu);
       }
 
       state.songs = data.songs;

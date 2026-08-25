@@ -32,7 +32,7 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 | Evening tagline | `સંગીતમય સાંજ` |
 | Group name | `ડભોઈ જૈન મિત્ર મંડળ - વડોદરા` |
 | Game type | `મ્યુઝિકલ હાઉઝી` |
-| Date | `તારીખ: ૮ સપ્ટેમ્બર, ૨૦૨૬` |
+| Date | `તારીખ: ૨૭ સપ્ટેમ્બર, ૨૦૨૬` |
 
 **Source document:** `output/pdf/DJMM - Musical Housie A4.pdf` — the housie ticket/board PDF in Gujarati with the song list and prize structure.
 
@@ -183,7 +183,7 @@ DJMM Musical Housie/
     "eveningGu": "સંગીતમય સાંજ",
     "titleGu": "ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
     "subtitleGu": "મ્યુઝિકલ હાઉઝી",
-    "dateGu": "તારીખ: ૮ સપ્ટેમ્બર, ૨૦૨૬"
+    "dateGu": "તારીખ: ૨૭ સપ્ટેમ્બર, ૨૦૨૬"
   },
   "songs": [
     {

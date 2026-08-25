@@ -755,19 +755,6 @@ body {
   line-height: 1.5;
 }
 
-/* ─── Footer ──────────────────────────────────────── */
-.footer {
-  text-align: center;
-  padding: 20px 20px 8px;
-  border-top: 1px solid var(--border);
-  margin-top: 8px;
-}
-.footer-evening {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--sub);
-}
-
 /* ─── Mini Player ─────────────────────────────────── */
 .mini-player {
   flex-shrink: 0;
