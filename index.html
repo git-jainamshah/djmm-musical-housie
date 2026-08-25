@@ -12,7 +12,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>મ્યુઝિકલ હાઉઝી · ડભોઈ જૈન મિત્ર મંડળ - વડોદરા</title>
-  <link rel="stylesheet" href="css/style.css?v=20260825e">
+  <link rel="stylesheet" href="css/style.css?v=20260825f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@200;300&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
@@ -55,6 +55,16 @@
 
   <!-- ══ Scrollable Main ═════════════════════════════════ -->
   <main class="main-scroll" id="main-scroll">
+
+    <div class="player-sheet-header">
+      <button class="player-collapse" id="player-collapse" aria-label="પ્લેયર નીચે કરો">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="5 9 12 16 19 9"/>
+        </svg>
+      </button>
+      <span>હમણાં વાગી રહ્યું છે</span>
+      <span class="player-sheet-spacer" aria-hidden="true"></span>
+    </div>
 
     <!-- NOW PLAYING ─────────────────────────────────────── -->
     <section class="now-playing">
@@ -153,6 +163,11 @@
       <div class="tracklist" id="song-list" role="list"></div>
     </section>
 
+    <footer class="app-footer">
+      <span>Brought to you by</span>
+      <span><a href="https://marrelay.com/" target="_blank" rel="noopener noreferrer">Marrelay</a> Apps &amp; Technology</span>
+    </footer>
+
   </main>
 
   <!-- ══ Mini Player (replaces old random bar) ══════════ -->
@@ -171,8 +186,8 @@
           <span></span><span></span><span></span><span></span>
         </div>
       </div>
-      <!-- Song info — tap to scroll to full player -->
-      <button class="mini-info" id="mini-info-btn" aria-label="Show full player">
+      <!-- Song info — tap to open full player -->
+      <button class="mini-info" id="mini-info-btn" aria-label="સંપૂર્ણ પ્લેયર ખોલો" aria-controls="main-scroll" aria-expanded="false">
         <span class="mini-number" id="mini-number">-</span>
         <span class="mini-name-text" id="mini-name">ગીત</span>
         <span class="mini-sub-text" id="mini-sub">...</span>
@@ -245,7 +260,7 @@
 </div><!-- #app -->
 
 <audio id="audio-player" preload="metadata"></audio>
-<script src="js/app.js?v=20260825f"></script>
+<script src="js/app.js?v=20260825g"></script>
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").then(function (reg) {

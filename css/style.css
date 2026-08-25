@@ -399,6 +399,95 @@ body {
   padding-top: calc(var(--safe-top) + 82px);
 }
 
+/* Spotify-style expanded player sheet */
+.player-sheet-header {
+  display: none;
+}
+
+.main-scroll.is-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  margin: 0 auto;
+  padding-top: var(--safe-top);
+  padding-bottom: calc(22px + var(--safe-bottom));
+  background:
+    radial-gradient(circle at 50% 4%, rgba(163, 64, 12, 0.75) 0%, rgba(74, 27, 8, 0.55) 28%, transparent 56%),
+    var(--black);
+  box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.65);
+  animation: player-sheet-up 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.main-scroll.is-expanded.is-closing {
+  animation: player-sheet-down 0.24s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes player-sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes player-sheet-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+.main-scroll.is-expanded .player-sheet-header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  min-height: 54px;
+  padding: 6px 14px;
+  background: linear-gradient(180deg, rgba(45, 16, 5, 0.96), rgba(45, 16, 5, 0.72) 72%, transparent);
+  color: var(--white);
+  font-family: var(--font-gu);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.player-collapse {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--white);
+  cursor: pointer;
+}
+.player-collapse svg { width: 24px; height: 24px; }
+.player-collapse:active { transform: scale(0.94); }
+.player-collapse:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+.player-sheet-spacer { width: 42px; height: 42px; }
+
+.main-scroll.is-expanded .now-playing {
+  padding-top: 10px;
+}
+
+.main-scroll.is-expanded .art-wrap {
+  width: min(330px, calc(100vw - 58px));
+}
+
+.main-scroll.is-expanded .tracklist-section,
+.main-scroll.is-expanded .app-footer {
+  display: none;
+}
+
+#app.player-expanded .mini-player {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
 /* ─── Now Playing ─────────────────────────────────── */
 .now-playing {
   background: transparent;
@@ -783,6 +872,33 @@ body {
 
 .tracklist { display: flex; flex-direction: column; }
 
+/* ─── App Footer ──────────────────────────────────── */
+.app-footer {
+  padding: 28px 20px calc(24px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: var(--muted);
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.app-footer a {
+  color: var(--sub);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.app-footer a:hover,
+.app-footer a:focus-visible {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Track row — CSS GRID for reliable text truncation */
 .song-item {
   display: grid;
@@ -897,7 +1013,7 @@ body {
   z-index: 10;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(255,255,255,0.05);
-  transition: background 0.12s;
+  transition: background 0.12s, opacity 0.2s ease, transform 0.25s ease;
 }
 .mini-player:active { background: rgba(35, 35, 35, 0.98); }
 

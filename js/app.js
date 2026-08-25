@@ -70,6 +70,7 @@
     audio:     el("audio-player"),
     app:       el("app"),
     mainScroll:el("main-scroll"),
+    playerCollapse: el("player-collapse"),
 
     // Mini-player
     miniPlayer:       el("mini-player"),
@@ -450,7 +451,36 @@
     seekTo(Number(els.progressBar.value));
   }
 
-  // Scroll main-scroll to top (to show full player)
+  let playerPreviousScroll = 0;
+  let playerCloseTimer = null;
+
+  function openExpandedPlayer() {
+    if (!els.mainScroll || els.mainScroll.classList.contains("is-expanded")) return;
+    playerPreviousScroll = els.mainScroll.scrollTop;
+    if (playerCloseTimer) clearTimeout(playerCloseTimer);
+    els.app.classList.add("player-expanded");
+    els.mainScroll.classList.remove("is-closing");
+    els.mainScroll.classList.add("is-expanded");
+    els.mainScroll.scrollTop = 0;
+    if (els.miniInfoBtn) els.miniInfoBtn.setAttribute("aria-expanded", "true");
+    if (els.playerCollapse) els.playerCollapse.focus();
+  }
+
+  function closeExpandedPlayer() {
+    if (!els.mainScroll || !els.mainScroll.classList.contains("is-expanded")) return;
+    els.mainScroll.classList.add("is-closing");
+    playerCloseTimer = setTimeout(function() {
+      els.mainScroll.classList.remove("is-expanded", "is-closing");
+      els.app.classList.remove("player-expanded");
+      els.mainScroll.scrollTop = playerPreviousScroll;
+      if (els.miniInfoBtn) {
+        els.miniInfoBtn.setAttribute("aria-expanded", "false");
+        els.miniInfoBtn.focus();
+      }
+    }, 240);
+  }
+
+  // Scroll the normal page to its full player.
   function scrollToPlayer() {
     if (els.mainScroll) els.mainScroll.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -485,11 +515,13 @@
       if (e.key !== "Escape") return;
       if (!els.restartSuccessDialog.classList.contains("hidden")) closeRestartSuccess();
       else if (!els.restartConfirmDialog.classList.contains("hidden")) cancelRestartGame();
+      else if (els.mainScroll.classList.contains("is-expanded")) closeExpandedPlayer();
     });
 
-    // Mini-player: entire bar taps to scroll to full player;
-    // control buttons stop propagation so they don't trigger the scroll
-    if (els.miniPlayer) els.miniPlayer.addEventListener("click", scrollToPlayer);
+    // Mini-player: tapping its artwork or song info opens the full player sheet;
+    // control buttons stop propagation so they keep their direct actions.
+    if (els.miniPlayer) els.miniPlayer.addEventListener("click", openExpandedPlayer);
+    if (els.playerCollapse) els.playerCollapse.addEventListener("click", closeExpandedPlayer);
     if (els.miniPlay)   els.miniPlay.addEventListener("click",   function(e) { e.stopPropagation(); togglePlay(); });
     if (els.miniNext)   els.miniNext.addEventListener("click",   function(e) { e.stopPropagation(); goNext(); });
     if (els.miniPrev)   els.miniPrev.addEventListener("click",   function(e) { e.stopPropagation(); goPrev(); });
