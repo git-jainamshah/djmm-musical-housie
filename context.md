@@ -97,7 +97,7 @@ The original 30 songs have playable `.mp3` files. Songs 31–45 are fully mapped
 
 - **Theme:** Spotify dark — `#121212` body, `#181818` surfaces, `#1DB954` green accent
 - **Gujarati font:** Locally bundled Noto Serif Gujarati in Regular, Medium, SemiBold, and Bold weights; Noto Sans Devanagari remains available for Hindi metadata
-- **PDF table type:** Every number and song title uses the same Noto Serif Gujarati 9pt size—longer titles are never individually reduced
+- **PDF table type:** Prize entries, song numbers, and song titles use the same Noto Serif Gujarati 10pt size—longer titles are never individually reduced
 - **Easy rollback:** Before this change, the web body used Noto Sans Gujarati and the top title used Anek Gujarati; that web/PDF version is preserved in Git commit `5550766`
 - **Layout:** Flex shell with a fixed top bar, scrollable main area, and persistent mini-player — max-width 480px
 - **Touch targets:** Play button 64–72px circle, Random button 56px full-width, skip buttons 56px
