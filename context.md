@@ -34,7 +34,7 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 | Game type | `મ્યુઝિકલ હાઉઝી` |
 | Date | `તારીખ: ૨૭ સપ્ટેમ્બર, ૨૦૨૬` |
 
-**Source document:** `output/pdf/DJMM - Musical Housie A4.pdf` — the housie ticket/board PDF in Gujarati with the song list and prize structure.
+**Printable document:** `output/pdf/DJMM - Musical Housie A4.pdf` — generated from `templates/djmm-musical-housie-a4.html`. The paste guide provides a verified **110 × 45 mm** ticket area, slightly larger than the approximately 100 × 40 mm ticket in the supplied reference sheet.
 
 ---
 
@@ -150,7 +150,7 @@ python3 scripts/download-songs.py
 
 ```
 DJMM Musical Housie/
-├── index.html                  # App shell — header, player, song list, footer
+├── index.html                  # App shell — header, player, and song list
 ├── css/style.css               # All styles (CSS custom properties, no preprocessor)
 ├── js/app.js                   # Player logic (IIFE, ~320 lines)
 ├── data/
@@ -161,6 +161,8 @@ DJMM Musical Housie/
 │   └── ... (through 30)
 ├── scripts/
 │   └── download-songs.py       # yt-dlp download script
+├── templates/
+│   └── djmm-musical-housie-a4.html # Printable A4 PDF source with 110 × 45 mm ticket guide
 ├── output/pdf/
 │   └── DJMM - Musical Housie A4.pdf # Gujarati housie PDF
 ├── sw.js                       # Audio-focused service worker
@@ -247,7 +249,7 @@ DJMM Musical Housie/
 | 42 | મે સે મીના શાના સાકી લે | 42, 87 | Pending |
 | 43 | છોગાળા તારા | 43, 88 | Pending |
 | 44 | આંખ મારે | 44, 89 | Pending |
-| 45 | સોન્ગ ૧ | 45, 90 | Pending |
+| 45 | હોવે હોવે | 45, 90 | Pending |
 
 ---
 

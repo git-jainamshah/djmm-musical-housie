@@ -65,7 +65,7 @@ npm run serve
 | 2 | રૂપ તેરા મસ્તાના | 2, 47 |
 | ... | *(see data/songs.json)* | ... |
 | 30 | લૈલા મૈં લૈલા | 30, 75 |
-| 45 | સોન્ગ ૧ | 45, 90 |
+| 45 | હોવે હોવે | 45, 90 |
 
 ## Project Structure
 
@@ -75,6 +75,8 @@ npm run serve
 ├── js/app.js           # Player logic
 ├── data/songs.json     # Song metadata + YouTube sources
 ├── audio/              # MP3 files (after download)
+├── templates/djmm-musical-housie-a4.html # Printable PDF source
+├── output/pdf/         # Generated A4 participant sheet
 ├── scripts/download-songs.py
 └── vercel.json
 ```
