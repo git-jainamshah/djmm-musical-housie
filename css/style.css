@@ -2,6 +2,38 @@
    DJMM Musical Housie — Premium Spotify Dark Theme v3
    ═══════════════════════════════════════════════════ */
 
+@font-face {
+  font-family: "Noto Serif Gujarati";
+  src: url("../fonts/NotoSerifGujarati-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif Gujarati";
+  src: url("../fonts/NotoSerifGujarati-Medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif Gujarati";
+  src: url("../fonts/NotoSerifGujarati-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Serif Gujarati";
+  src: url("../fonts/NotoSerifGujarati-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -18,7 +50,9 @@
   --muted:      #727272;
   --border:     rgba(255,255,255,0.07);
 
-  --font-gu:    "Noto Sans Gujarati", system-ui, sans-serif;
+  /* Previous Gujarati stack retained here for an easy rollback. */
+  --font-gu-previous: "Noto Sans Gujarati", system-ui, sans-serif;
+  --font-gu:    "Noto Serif Gujarati", "Noto Sans Gujarati", serif;
   --font-hi:    "Noto Sans Devanagari", system-ui, sans-serif;
   --font-en:    "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
 
@@ -151,7 +185,7 @@ body {
 }
 
 .top-title {
-  font-family: 'Anek Gujarati', 'Noto Sans Gujarati', sans-serif;
+  font-family: var(--font-gu);
   font-size: clamp(0.86rem, 3.5vw, 1.05rem);
   font-weight: 300;
   color: var(--white);
@@ -315,7 +349,7 @@ body {
   font-weight: 700;
   color: rgba(255,255,255,0.65);
   margin-bottom: 4px;
-  font-family: var(--font-en);
+  font-family: var(--font-gu);
 }
 
 .np-number {
@@ -363,14 +397,14 @@ body {
   font-weight: 600;
   color: var(--green);
   margin-bottom: 4px;
-  font-family: var(--font-en);
+  font-family: var(--font-gu);
 }
 
 .np-meta {
   font-size: 0.78rem;
   color: rgba(255,255,255,0.70);
   line-height: 1.5;
-  font-family: var(--font-en);
+  font-family: var(--font-gu);
 }
 
 /* ─── Controls ────────────────────────────────────── */
@@ -708,7 +742,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: var(--font-en);
+  font-family: var(--font-gu);
 }
 
 .song-item-nums {
@@ -861,7 +895,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
-  font-family: var(--font-en);
+  font-family: var(--font-gu);
 }
 
 /* Mini controls row */

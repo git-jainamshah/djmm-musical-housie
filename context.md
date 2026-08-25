@@ -32,7 +32,7 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 | Evening tagline | `સંગીતમય સાંજ` |
 | Group name | `ડભોઈ જૈન મિત્ર મંડળ - વડોદરા` |
 | Game type | `મ્યુઝિકલ હાઉઝી` |
-| Date | `તારીખ: ૧ જુલાઈ, ૨૦૨૬` |
+| Date | `તારીખ: ૮ સપ્ટેમ્બર, ૨૦૨૬` |
 
 **Source document:** `output/pdf/DJMM - Musical Housie A4.pdf` — the housie ticket/board PDF in Gujarati with the song list and prize structure.
 
@@ -96,7 +96,9 @@ The original 30 songs have playable `.mp3` files. Songs 31–45 are fully mapped
 ### UI Design (Current)
 
 - **Theme:** Spotify dark — `#121212` body, `#181818` surfaces, `#1DB954` green accent
-- **Fonts:** Noto Sans Gujarati + Noto Sans Devanagari (Google Fonts); Cormorant Garamond removed
+- **Gujarati font:** Locally bundled Noto Serif Gujarati in Regular, Medium, SemiBold, and Bold weights; Noto Sans Devanagari remains available for Hindi metadata
+- **PDF table type:** Every number and song title uses the same Noto Serif Gujarati 9pt size—longer titles are never individually reduced
+- **Easy rollback:** Before this change, the web body used Noto Sans Gujarati and the top title used Anek Gujarati; that web/PDF version is preserved in Git commit `5550766`
 - **Layout:** Flex shell with a fixed top bar, scrollable main area, and persistent mini-player — max-width 480px
 - **Touch targets:** Play button 64–72px circle, Random button 56px full-width, skip buttons 56px
 - **Safe areas:** `env(safe-area-inset-*)` for iPhone notch/home bar
@@ -181,7 +183,7 @@ DJMM Musical Housie/
     "eveningGu": "સંગીતમય સાંજ",
     "titleGu": "ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
     "subtitleGu": "મ્યુઝિકલ હાઉઝી",
-    "dateGu": "તારીખ: ૧ જુલાઈ, ૨૦૨૬"
+    "dateGu": "તારીખ: ૮ સપ્ટેમ્બર, ૨૦૨૬"
   },
   "songs": [
     {
