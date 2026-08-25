@@ -241,14 +241,14 @@ DJMM Musical Housie/
 | 34 | મહેબૂબા મહેબૂબા | 34, 79 | Pending |
 | 35 | જબ છાયે મેરા જાદુ | 35, 80 | Pending |
 | 36 | કાલા ચશ્મા | 36, 81 | Pending |
-| 37 | હાયો રબ્બા | 37, 82 | Pending |
+| 37 | બોલો તારા રા રા | 37, 82 | Metadata and artwork added; audio pending |
 | 38 | તુને મારી એન્ટ્રી | 38, 83 | Pending |
 | 39 | હેલો યેલો | 39, 84 | Pending |
 | 40 | કોઈ કહે કહેતા રહે | 40, 85 | Pending |
 | 41 | મલ્હારી | 41, 86 | Pending |
 | 42 | મે સે મીના શાના સાકી લે | 42, 87 | Pending |
 | 43 | છોગાળા તારા | 43, 88 | Pending |
-| 44 | આંખ મારે | 44, 89 | Pending |
+| 44 | આંખ મારે | 44, 89 | Metadata and artwork added; audio pending |
 | 45 | હોવે હોવે | 45, 90 | Pending |
 
 ---
