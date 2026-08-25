@@ -230,7 +230,7 @@ DJMM Musical Housie/
 | 23 | હવા હવાઈ | 23, 68 | Ready |
 | 24 | જુમ્મા ચુમ્મા દે દે | 24, 69 | Ready |
 | 25 | યે કાલી કાલી આંખેં | 25, 70 | Ready |
-| 26 | ઐંવઈ ઐંવઈ | 26, 71 | Metadata added; artwork and audio pending |
+| 26 | ઐંવઈ ઐંવઈ | 26, 71 | Metadata and artwork added; audio pending |
 | 27 | દીદી તેરા દેવર | 27, 72 | Ready |
 | 28 | જો હાલ દિલ કા | 28, 73 | Ready |
 | 29 | મેરે ખ્વાબોં મેં જો | 29, 74 | Ready |
