@@ -189,7 +189,12 @@
   function updateArt(song) {
     const grad = songGradient(song.id);
     const url  = getArtUrl(song, "hqdefault");
-    if (els.nowArtBg)  els.nowArtBg.style.background = grad;
+    if (els.nowArtWrap) els.nowArtWrap.classList.toggle("has-art", Boolean(url));
+    if (els.nowArtBg) {
+      els.nowArtBg.style.background = url
+        ? "url(\"" + url + "\") center / cover no-repeat"
+        : grad;
+    }
     if (els.nowArtImg) {
       if (url) { els.nowArtImg.src = url; els.nowArtImg.style.opacity = "1"; }
       else     { els.nowArtImg.src = "";  els.nowArtImg.style.opacity = "0"; }
