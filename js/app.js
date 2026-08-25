@@ -53,6 +53,13 @@
     btnRandom: el("btn-random"),
     btnRestart:el("btn-restart"),
 
+    // Restart dialogs
+    restartConfirmDialog: el("restart-confirm-dialog"),
+    restartConfirm:       el("restart-confirm"),
+    restartCancel:        el("restart-cancel"),
+    restartSuccessDialog: el("restart-success-dialog"),
+    restartSuccessClose:  el("restart-success-close"),
+
     // Volume
     volumeBar:  el("volume-bar"),
     volumeFill: el("volume-fill"),
@@ -394,8 +401,31 @@
     setStatus("🎲 " + toGu(pick) + " · " + (currentSong() || {}).nameGu);
   }
 
+  let restartReturnFocus = null;
+
+  function showDialog(dialog, focusTarget) {
+    if (!dialog) return;
+    dialog.classList.remove("hidden");
+    if (focusTarget) focusTarget.focus();
+  }
+
+  function hideDialog(dialog, restoreFocus) {
+    if (!dialog) return;
+    dialog.classList.add("hidden");
+    if (restoreFocus && restartReturnFocus) restartReturnFocus.focus();
+  }
+
+  function requestRestartGame() {
+    restartReturnFocus = document.activeElement;
+    showDialog(els.restartConfirmDialog, els.restartCancel);
+  }
+
+  function cancelRestartGame() {
+    hideDialog(els.restartConfirmDialog, true);
+  }
+
   function restartGame() {
-    if (!confirm("નવી રમત શરૂ કરવી? · Start a new game?")) return;
+    hideDialog(els.restartConfirmDialog, false);
     state.playedNumbers.clear();
     state.currentHousieNumber = 1;
     state.isPlaying = false;
@@ -404,7 +434,12 @@
     loadAudio(currentSong());
     updateDisplay();
     updatePlayBtn();
-    setStatus("નવી રમત શરૂ! 🎉");
+    setStatus("નવી ગેમ શરૂ થઈ ગઈ! 🎉");
+    showDialog(els.restartSuccessDialog, els.restartSuccessClose);
+  }
+
+  function closeRestartSuccess() {
+    hideDialog(els.restartSuccessDialog, true);
   }
 
   // ── Seek ──────────────────────────────────────────
@@ -435,7 +470,22 @@
     els.btnNext.addEventListener("click",    goNext);
     els.btnPrev.addEventListener("click",    goPrev);
     els.btnRandom.addEventListener("click",  pickRandom);
-    els.btnRestart.addEventListener("click", restartGame);
+    els.btnRestart.addEventListener("click", requestRestartGame);
+    els.restartCancel.addEventListener("click", cancelRestartGame);
+    els.restartConfirm.addEventListener("click", restartGame);
+    els.restartSuccessClose.addEventListener("click", closeRestartSuccess);
+
+    els.restartConfirmDialog.addEventListener("click", function(e) {
+      if (e.target === this) cancelRestartGame();
+    });
+    els.restartSuccessDialog.addEventListener("click", function(e) {
+      if (e.target === this) closeRestartSuccess();
+    });
+    document.addEventListener("keydown", function(e) {
+      if (e.key !== "Escape") return;
+      if (!els.restartSuccessDialog.classList.contains("hidden")) closeRestartSuccess();
+      else if (!els.restartConfirmDialog.classList.contains("hidden")) cancelRestartGame();
+    });
 
     // Mini-player: entire bar taps to scroll to full player;
     // control buttons stop propagation so they don't trigger the scroll

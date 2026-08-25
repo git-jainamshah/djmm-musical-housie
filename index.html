@@ -12,7 +12,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>મ્યુઝિકલ હાઉઝી · ડભોઈ જૈન મિત્ર મંડળ - વડોદરા</title>
-  <link rel="stylesheet" href="css/style.css?v=20260825b">
+  <link rel="stylesheet" href="css/style.css?v=20260825c">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@200;300&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
@@ -37,11 +37,12 @@
           </div>
         </div>
       </div>
-      <!-- Restart button — Spotify green play -->
-      <button class="restart-btn" id="btn-restart" aria-label="Restart game">
+      <!-- Restart game -->
+      <button class="restart-btn" id="btn-restart" aria-label="ગેમ ફરી શરૂ કરો">
         <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <circle cx="24" cy="24" r="24" fill="#1DB954"/>
-          <polygon points="20,17 33,24 20,31" fill="#fff"/>
+          <path d="M34.5 17.5A12 12 0 1 0 35 29" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+          <path d="M34.5 10.5v7.5H27" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
@@ -204,10 +205,44 @@
     </div>
   </div>
 
+  <!-- Restart confirmation -->
+  <div class="app-dialog hidden" id="restart-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="restart-confirm-title" aria-describedby="restart-confirm-message">
+    <div class="dialog-card">
+      <div class="dialog-icon dialog-icon-restart" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M17.5 8.5A7 7 0 1 0 18 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M17.5 4.5V9h-4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="dialog-title" id="restart-confirm-title">ગેમ ફરી શરૂ કરવી છે?</h2>
+      <p class="dialog-message" id="restart-confirm-message">આ ગેમ ફરી શરૂ થશે અને વગાડવામાં આવેલા બધા ગીતો રીસેટ થઈ જશે. શું તમે ખરેખર ગેમ ફરી શરૂ કરવા માંગો છો?</p>
+      <div class="dialog-actions">
+        <button class="dialog-btn dialog-btn-secondary" id="restart-cancel">રદ કરો</button>
+        <button class="dialog-btn dialog-btn-primary" id="restart-confirm">ફરી શરૂ કરો</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restart success -->
+  <div class="app-dialog hidden" id="restart-success-dialog" role="dialog" aria-modal="true" aria-labelledby="restart-success-title" aria-describedby="restart-success-message">
+    <div class="dialog-card">
+      <div class="dialog-icon dialog-icon-success" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="m7 12.5 3.2 3.2L17.5 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="dialog-title" id="restart-success-title">નવી ગેમ શરૂ થઈ ગઈ!</h2>
+      <p class="dialog-message" id="restart-success-message">વગાડવામાં આવેલા બધા ગીતો સફળતાપૂર્વક રીસેટ થઈ ગયા છે.</p>
+      <div class="dialog-actions dialog-actions-single">
+        <button class="dialog-btn dialog-btn-primary" id="restart-success-close">બરાબર</button>
+      </div>
+    </div>
+  </div>
+
 </div><!-- #app -->
 
 <audio id="audio-player" preload="metadata"></audio>
-<script src="js/app.js?v=20260825e"></script>
+<script src="js/app.js?v=20260825f"></script>
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").then(function (reg) {
