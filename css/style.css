@@ -887,10 +887,20 @@ body {
 }
 
 .app-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--sub);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.15s;
+}
+
+.marrelay-logo {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  object-fit: contain;
 }
 .app-footer a:hover,
 .app-footer a:focus-visible {
