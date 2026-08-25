@@ -243,7 +243,7 @@ DJMM Musical Housie/
 | 36 | કાલા ચશ્મા | 36, 81 | Pending |
 | 37 | બોલો તારા રા રા | 37, 82 | Metadata and artwork added; audio pending |
 | 38 | તુને મારી એન્ટ્રી | 38, 83 | Pending |
-| 39 | હેલો યેલો | 39, 84 | Pending |
+| 39 | ગલ્લાં ગુડિયાં | 39, 84 | Metadata and artwork added; audio pending |
 | 40 | કોઈ કહે કહેતા રહે | 40, 85 | Pending |
 | 41 | મલ્હારી | 41, 86 | Pending |
 | 42 | મે સે મીના શાના સાકી લે | 42, 87 | Pending |
