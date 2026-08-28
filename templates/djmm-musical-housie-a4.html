@@ -27,6 +27,7 @@
 
     @page { size: A4; margin: 0; }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html, body { margin: 0; width: 210mm; height: 297mm; }
     body {
       color: #151515;
@@ -120,6 +121,44 @@
       border-right: 0.45mm solid;
       border-bottom: 0.45mm solid;
     }
+    .generated-ticket {
+      width: 110mm;
+      height: 45mm;
+      border: 0.6mm solid #171717;
+      background: #fff;
+      display: grid;
+      grid-template-rows: 6mm 1fr;
+      box-shadow: 0 1mm 2mm rgba(0, 0, 0, 0.08);
+    }
+    .generated-ticket-head {
+      padding: 0 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #171717;
+      color: #fff;
+      font-size: 7.5pt;
+      font-weight: 700;
+    }
+    .generated-ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+    }
+    .ticket-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 0.32mm solid #34312e;
+      border-bottom: 0.32mm solid #34312e;
+      font-size: 15pt;
+      line-height: 1;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .ticket-cell:nth-child(9n) { border-right: 0; }
+    .ticket-cell:nth-last-child(-n + 9) { border-bottom: 0; }
+    .ticket-cell.is-empty { background: #eeece9; }
 
     .prizes { margin-top: 3mm; flex: 0 0 auto; }
     .prizes-title {
@@ -228,9 +267,16 @@
     </header>
 
     <section class="ticket-section">
-      <span class="ticket-label">ટિકિટ અહીં ચોંટાડો</span>
-      <span class="ticket-number">ટિકિટ નં. __________________</span>
-      <div class="ticket-guide" data-width-mm="110" data-height-mm="45">તમારી ટિકિટ અહીંયા ચોટાડો</div>
+      <span class="ticket-label" id="ticket-label">ટિકિટ અહીં ચોંટાડો</span>
+      <span class="ticket-number" id="ticket-number">ટિકિટ નં. __________________</span>
+      <div class="ticket-guide" id="ticket-guide" data-width-mm="110" data-height-mm="45">તમારી ટિકિટ અહીંયા ચોટાડો</div>
+      <div class="generated-ticket" id="generated-ticket" aria-label="મ્યુઝિકલ હાઉઝી ટિકિટ" hidden>
+        <div class="generated-ticket-head">
+          <span>મ્યુઝિકલ હાઉઝી ટિકિટ</span>
+          <span id="generated-ticket-number"></span>
+        </div>
+        <div class="generated-ticket-grid" id="generated-ticket-grid"></div>
+      </div>
     </section>
 
     <section class="prizes">
@@ -261,6 +307,31 @@
   <script>
     const GU = ["૦", "૧", "૨", "૩", "૪", "૫", "૬", "૭", "૮", "૯"];
     const toGu = value => String(value).replace(/\d/g, digit => GU[Number(digit)]);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("ticket")) {
+      const sampleTicket = [
+        [null, 13, 23, null, 41, 57, null, 71, null],
+        [3, null, 29, null, 43, null, 61, null, 87],
+        [null, 15, null, 35, 47, null, 65, 75, null]
+      ];
+      const ticketNumber = Number(params.get("ticketNumber")) || 1;
+      const ticketGrid = document.getElementById("generated-ticket-grid");
+
+      sampleTicket.flat().forEach(value => {
+        const cell = document.createElement("span");
+        cell.className = `ticket-cell${value == null ? " is-empty" : ""}`;
+        cell.textContent = value == null ? "" : toGu(value);
+        ticketGrid.appendChild(cell);
+      });
+
+      document.getElementById("ticket-label").hidden = true;
+      document.getElementById("ticket-number").hidden = true;
+      document.getElementById("ticket-guide").hidden = true;
+      document.getElementById("generated-ticket").hidden = false;
+      document.getElementById("generated-ticket-number").textContent = `ટિકિટ નં. ${toGu(String(ticketNumber).padStart(4, "0"))}`;
+      document.documentElement.dataset.ticketReady = "true";
+    }
 
     fetch("/data/songs.json")
       .then(response => response.json())
