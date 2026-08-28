@@ -724,10 +724,14 @@ body {
 
 /* Prev · Play · Next · Random */
 .main-controls {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px 68px 52px;
   align-items: center;
+  justify-items: center;
   justify-content: center;
-  gap: 20px;
+  column-gap: 18px;
+  min-height: 68px;
   margin-bottom: 20px;
 }
 
@@ -766,6 +770,10 @@ body {
 
 /* Random button in controls */
 .ctrl-random {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 46px;
   height: 46px;
   color: var(--green);
@@ -773,7 +781,7 @@ body {
   border-radius: 50%;
 }
 .ctrl-random svg { width: 22px; height: 22px; }
-.ctrl-random:active { background: rgba(29,185,84,0.28); opacity: 1; }
+.ctrl-random:active { background: rgba(29,185,84,0.28); opacity: 1; transform: translateY(-50%) scale(0.9); }
 
 /* Volume */
 .volume-row {
