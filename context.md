@@ -36,7 +36,7 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 
 **Printable documents:**
 - `output/pdf/DJMM - Musical Housie A4.pdf` — participant sheet generated from `templates/djmm-musical-housie-a4.html`. The paste guide provides a verified **110 × 45 mm** ticket area, slightly larger than the approximately 100 × 40 mm ticket in the supplied reference sheet.
-- `output/pdf/DJMM - Musical Housie A4 - Sample Ticket.pdf` — participant-sheet sample with a generated 3 × 9, 15-number ticket (`ટિકિટ નં. ૦૦૦૧`) embedded in the same 110 × 45 mm area. The template's `?ticket=sample&ticketNumber=1` mode is the basis for the future 1,000-ticket batch.
+- `output/pdf/DJMM - Musical Housie A4 - Sample Ticket.pdf` — participant-sheet sample with a generated 3 × 9, 15-number ticket (`ટિકિટ નં. 0001`) embedded in the same 110 × 45 mm area. Ticket numbers and ticket-grid numbers use English digits. The template's `?ticket=sample&ticketNumber=1` mode is the basis for the future 1,000-ticket batch.
 - `output/pdf/DJMM - Musical Housie - Checklist & Winners Sheet A4.pdf` — organizer checklist and winners register generated from `templates/djmm-checklist-winners-a4.html`.
 
 ### Three synchronized deliverables

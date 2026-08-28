@@ -321,7 +321,7 @@
       sampleTicket.flat().forEach(value => {
         const cell = document.createElement("span");
         cell.className = `ticket-cell${value == null ? " is-empty" : ""}`;
-        cell.textContent = value == null ? "" : toGu(value);
+        cell.textContent = value == null ? "" : String(value);
         ticketGrid.appendChild(cell);
       });
 
@@ -329,7 +329,7 @@
       document.getElementById("ticket-number").hidden = true;
       document.getElementById("ticket-guide").hidden = true;
       document.getElementById("generated-ticket").hidden = false;
-      document.getElementById("generated-ticket-number").textContent = `ટિકિટ નં. ${toGu(String(ticketNumber).padStart(4, "0"))}`;
+      document.getElementById("generated-ticket-number").textContent = `ટિકિટ નં. ${String(ticketNumber).padStart(4, "0")}`;
       document.documentElement.dataset.ticketReady = "true";
     }
 
