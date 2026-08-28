@@ -6,7 +6,7 @@
 
 ## Why This Project Exists
 
-This is an internal event tool built for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.
+This is an internal event tool built for **શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા**.
 
 During the gathering, participants play **Musical Housie** (also called Musical Tambola / Kukuba). Instead of calling numbers 1–90, the host plays Bollywood songs — each song maps to two housie numbers on the players' tickets.
 
@@ -30,7 +30,7 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 |-------|---------------|
 | Blessing | `\|\| શ્રી લોઢણ પાર્શ્વનાથાય નમઃ \|\|` |
 | Evening tagline | `સંગીતમય સાંજ` |
-| Group name | `ડભોઈ જૈન મિત્ર મંડળ - વડોદરા` |
+| Group name | `શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા` |
 | Game type | `મ્યુઝિકલ હાઉઝી` |
 | Date | `તારીખ: ૨૭ સપ્ટેમ્બર, ૨૦૨૬` |
 
@@ -183,7 +183,7 @@ DJMM Musical Housie/
   "event": {
     "blessingGu": "|| શ્રી લોઢણ પાર્શ્વનાથાય નમઃ ||",
     "eveningGu": "સંગીતમય સાંજ",
-    "titleGu": "ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
+    "titleGu": "શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા",
     "subtitleGu": "મ્યુઝિકલ હાઉઝી",
     "dateGu": "તારીખ: ૨૭ સપ્ટેમ્બર, ૨૦૨૬"
   },

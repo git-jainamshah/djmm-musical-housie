@@ -1,7 +1,7 @@
 {
   "name": "djmm-musical-housie",
   "version": "1.0.0",
-  "description": "Live Musical Housie song player for ડભોઈ જૈન મિત્ર મંડળ - વડોદરા",
+  "description": "Live Musical Housie song player for શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા",
   "private": true,
   "scripts": {
     "download": "python3 scripts/download-songs.py",

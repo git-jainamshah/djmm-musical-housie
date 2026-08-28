@@ -1,6 +1,6 @@
 # DJMM Musical Housie — Live Song Player
 
-A simple, one-page web app to play songs live for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.
+A simple, one-page web app to play songs live for **શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા**.
 
 Built for easy use — large buttons, Gujarati labels, and a scrollable song list.
 
@@ -91,4 +91,4 @@ npm run serve
 
 ---
 
-Made with ❤️ for **ડભોઈ જૈન મિત્ર મંડળ - વડોદરા**.
+Made with ❤️ for **શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા**.
