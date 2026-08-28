@@ -166,13 +166,19 @@
       flex: 1;
       display: flex;
       align-items: flex-end;
-      gap: 1.8mm;
+      gap: 1.4mm;
       padding: 1.8mm 0 0.9mm;
       font-size: 7.5pt;
       font-weight: 500;
     }
     .winner-line + .winner-line { border-top: 0.2mm solid #d1ceca; }
     .write-line { flex: 1; height: 3mm; border-bottom: 0.28mm solid #242424; }
+    .ticket-field-label { flex: 0 0 auto; white-space: nowrap; }
+    .ticket-write-line {
+      flex: 0 0 14mm;
+      height: 3mm;
+      border-bottom: 0.28mm solid #242424;
+    }
     .full-house {
       grid-column: 1 / -1;
       height: 42mm;
@@ -247,7 +253,7 @@
       ["ડિનર", 2], ["ફુલ હાઉઝી", 4]
     ];
 
-    const winnerLine = index => `<div class="winner-line"><span>વિજેતા ${toGu(index)} - નામ:</span><span class="write-line"></span></div>`;
+    const winnerLine = index => `<div class="winner-line"><span>વિજેતા ${toGu(index)} - નામ:</span><span class="write-line"></span><span class="ticket-field-label">ટિકિટ નં.:</span><span class="ticket-write-line"></span></div>`;
 
     fetch("/data/songs.json")
       .then(response => response.json())
