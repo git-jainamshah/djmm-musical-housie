@@ -566,7 +566,7 @@
   async function init() {
     els.app.classList.add("loading");
     try {
-      const res  = await fetch("data/songs.json?v=20260827a");
+      const res  = await fetch("data/songs.json?v=20260827b");
       const data = await res.json();
 
       if (data.event) {
