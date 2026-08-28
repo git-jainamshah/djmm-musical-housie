@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="gu">
+<head>
+  <meta charset="utf-8">
+  <title>DJMM Musical Housie - Checklist & Winners</title>
+  <style>
+    @font-face {
+      font-family: "Noto Serif Gujarati";
+      src: url("/fonts/NotoSerifGujarati-Regular.ttf") format("truetype");
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: "Noto Serif Gujarati";
+      src: url("/fonts/NotoSerifGujarati-Medium.ttf") format("truetype");
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: "Noto Serif Gujarati";
+      src: url("/fonts/NotoSerifGujarati-SemiBold.ttf") format("truetype");
+      font-weight: 600;
+    }
+    @font-face {
+      font-family: "Noto Serif Gujarati";
+      src: url("/fonts/NotoSerifGujarati-Bold.ttf") format("truetype");
+      font-weight: 700;
+    }
+
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 210mm; background: #fff; }
+    body {
+      color: #171717;
+      font-family: "Noto Serif Gujarati", serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      padding: 7mm 10mm 6mm;
+      overflow: hidden;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    .masthead {
+      height: 31mm;
+      border: 0.45mm solid #242424;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .blessing { margin: 0 0 0.4mm; color: #625f5b; font-size: 7pt; font-weight: 500; }
+    .evening { margin: 0; color: #77716b; font-size: 8.5pt; font-weight: 600; }
+    .org { margin: 0.35mm 0 0; font-size: 16pt; line-height: 1.15; font-weight: 700; }
+    .event-row {
+      margin-top: 0.7mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.4mm;
+      color: #4c4945;
+      font-size: 7.5pt;
+      font-weight: 500;
+    }
+    .event-row .dot { width: 1.3mm; height: 1.3mm; background: #1b1b1b; transform: rotate(45deg); }
+
+    .section-title {
+      height: 8mm;
+      margin: 2.5mm 0 1.5mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 0.75mm solid #171717;
+      font-size: 11.5pt;
+      font-weight: 700;
+    }
+
+    .song-table {
+      width: 100%;
+      border: 0.35mm solid #2a2a2a;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .song-table col.serial { width: 18mm; }
+    .song-table col.order { width: 31mm; }
+    .song-table col.played { width: 21mm; }
+    .song-table thead tr { height: 7mm; }
+    .song-table tbody tr { height: 5mm; }
+    .song-table th {
+      padding: 0 2mm;
+      border-right: 0.25mm solid #fff;
+      background: #171717;
+      color: #fff;
+      font-size: 8.6pt;
+      font-weight: 700;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .song-table th:first-child,
+    .song-table th:nth-child(2),
+    .song-table th:last-child { text-align: center; }
+    .song-table th:last-child { border-right: 0; }
+    .song-table td {
+      height: 5mm;
+      padding: 0 2mm;
+      border-right: 0.25mm solid #bbb8b3;
+      border-bottom: 0.2mm solid #b8b5b0;
+      font-size: 8.2pt;
+      font-weight: 500;
+      line-height: 1;
+      vertical-align: middle;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .song-table tbody tr:nth-child(even) td { background: #f0efed; }
+    .song-table tbody tr:last-child td { border-bottom: 0; }
+    .song-table td:last-child { border-right: 0; }
+    .song-table .serial-cell,
+    .song-table .order-cell,
+    .song-table .played-cell { text-align: center; font-weight: 600; }
+    .check-box {
+      display: inline-block;
+      width: 3.2mm;
+      height: 3.2mm;
+      border: 0.45mm solid #171717;
+      vertical-align: middle;
+    }
+
+    .page-footer {
+      position: absolute;
+      left: 10mm;
+      right: 10mm;
+      bottom: 2.5mm;
+      color: #706b65;
+      font-size: 6.5pt;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .winners-page .section-title { margin-top: 3mm; }
+    .winner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+    .winner-card {
+      height: 28mm;
+      padding: 2.3mm 2.5mm 1.8mm;
+      border: 0.4mm solid #242424;
+      display: flex;
+      flex-direction: column;
+    }
+    .winner-heading {
+      padding-bottom: 1.2mm;
+      border-bottom: 0.25mm solid #aaa7a2;
+      font-size: 9.5pt;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .winner-heading small { font-size: 7pt; font-weight: 500; }
+    .winner-line {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 1.8mm;
+      padding: 1.8mm 0 0.9mm;
+      font-size: 7.5pt;
+      font-weight: 500;
+    }
+    .winner-line + .winner-line { border-top: 0.2mm solid #d1ceca; }
+    .write-line { flex: 1; height: 3mm; border-bottom: 0.28mm solid #242424; }
+    .full-house {
+      grid-column: 1 / -1;
+      height: 42mm;
+    }
+    .full-house-lines {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5mm;
+      flex: 1;
+    }
+    .full-house .winner-line:nth-child(3),
+    .full-house .winner-line:nth-child(4) { border-top: 0.2mm solid #d1ceca; }
+    .sheet-note {
+      margin-top: 3mm;
+      padding: 2.5mm 3mm;
+      border: 0.3mm solid #aaa7a2;
+      color: #5f5b56;
+      font-size: 7pt;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main class="page checklist-page">
+    <header class="masthead">
+      <p class="blessing js-blessing"></p>
+      <p class="evening js-evening"></p>
+      <h1 class="org js-org"></h1>
+      <div class="event-row">
+        <span class="js-game"></span><span class="dot" aria-hidden="true"></span><span class="js-date"></span>
+      </div>
+    </header>
+
+    <h2 class="section-title">ગીતોની ચેકલિસ્ટ</h2>
+    <table class="song-table" aria-label="મ્યુઝિકલ હાઉઝી ગીતોની ચેકલિસ્ટ">
+      <colgroup>
+        <col class="serial"><col class="order"><col><col class="played">
+      </colgroup>
+      <thead>
+        <tr><th>ગીત નં.</th><th>ક્રમ</th><th>ગીત</th><th>વગાડ્યું</th></tr>
+      </thead>
+      <tbody id="song-rows"></tbody>
+    </table>
+    <footer class="page-footer">શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા · મ્યુઝિકલ હાઉઝી</footer>
+  </main>
+
+  <main class="page winners-page">
+    <header class="masthead">
+      <p class="blessing js-blessing"></p>
+      <p class="evening js-evening"></p>
+      <h1 class="org js-org"></h1>
+      <div class="event-row">
+        <span class="js-game"></span><span class="dot" aria-hidden="true"></span><span class="js-date"></span>
+      </div>
+    </header>
+
+    <h2 class="section-title">વિજેતાઓની નોંધ</h2>
+    <section class="winner-grid" id="winner-grid"></section>
+    <div class="sheet-note">નોંધ: વિજેતાનું નામ સ્પષ્ટ અક્ષરોમાં લખવું અને ઇનામ આપ્યા પછી તેની સામે નિશાની કરવી.</div>
+    <footer class="page-footer">શ્રી ડભોઇ જૈન મિત્ર મંડળ - વડોદરા · વિજેતાઓની નોંધ</footer>
+  </main>
+
+  <script>
+    const GU = ["૦", "૧", "૨", "૩", "૪", "૫", "૬", "૭", "૮", "૯"];
+    const toGu = value => String(value).replace(/\d/g, digit => GU[Number(digit)]);
+    const prizes = [
+      ["પહેલાં ૫", 2], ["પહેલાં ૯", 2],
+      ["ચાર ખૂણા", 2], ["ઉપરની લાઈન", 2],
+      ["વચ્ચેની લાઈન", 2], ["નીચેની લાઈન", 2],
+      ["બ્રેકફાસ્ટ", 2], ["લંચ", 2],
+      ["ડિનર", 2], ["ફુલ હાઉઝી", 4]
+    ];
+
+    const winnerLine = index => `<div class="winner-line"><span>વિજેતા ${toGu(index)} - નામ:</span><span class="write-line"></span></div>`;
+
+    fetch("/data/songs.json")
+      .then(response => response.json())
+      .then(data => {
+        document.querySelectorAll(".js-blessing").forEach(el => { el.textContent = data.event.blessingGu; });
+        document.querySelectorAll(".js-evening").forEach(el => { el.textContent = data.event.eveningGu; });
+        document.querySelectorAll(".js-org").forEach(el => { el.textContent = data.event.titleGu; });
+        document.querySelectorAll(".js-game").forEach(el => { el.textContent = data.event.subtitleGu; });
+        document.querySelectorAll(".js-date").forEach(el => { el.textContent = data.event.dateGu; });
+
+        const rows = document.getElementById("song-rows");
+        data.songs.forEach(song => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td class="serial-cell">${toGu(song.id)}</td>
+            <td class="order-cell">${toGu(song.id)} / ${toGu(song.id + 45)}</td>
+            <td>${song.nameGu}</td>
+            <td class="played-cell"><span class="check-box" aria-hidden="true"></span></td>`;
+          rows.appendChild(row);
+        });
+
+        const winnerGrid = document.getElementById("winner-grid");
+        prizes.forEach(([name, count]) => {
+          const card = document.createElement("article");
+          card.className = `winner-card${count === 4 ? " full-house" : ""}`;
+          const lines = Array.from({ length: count }, (_, index) => winnerLine(index + 1)).join("");
+          card.innerHTML = `<div class="winner-heading">${name} <small>(${toGu(count)} વિજેતા)</small></div>${count === 4 ? `<div class="full-house-lines">${lines}</div>` : lines}`;
+          winnerGrid.appendChild(card);
+        });
+
+        document.fonts.ready.then(() => {
+          const overflowCount = [...document.querySelectorAll(".song-table tbody td")]
+            .filter(cell => cell.scrollWidth > cell.clientWidth).length;
+          document.documentElement.dataset.overflowCount = String(overflowCount);
+          document.documentElement.dataset.songCount = String(data.songs.length);
+          document.documentElement.dataset.ready = "true";
+        });
+      });
+  </script>
+</body>
+</html>

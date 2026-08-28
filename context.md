@@ -34,7 +34,19 @@ These strings live in `data/songs.json → event` and are rendered in `index.htm
 | Game type | `મ્યુઝિકલ હાઉઝી` |
 | Date | `તારીખ: ૨૭ સપ્ટેમ્બર, ૨૦૨૬` |
 
-**Printable document:** `output/pdf/DJMM - Musical Housie A4.pdf` — generated from `templates/djmm-musical-housie-a4.html`. The paste guide provides a verified **110 × 45 mm** ticket area, slightly larger than the approximately 100 × 40 mm ticket in the supplied reference sheet.
+**Printable documents:**
+- `output/pdf/DJMM - Musical Housie A4.pdf` — participant sheet generated from `templates/djmm-musical-housie-a4.html`. The paste guide provides a verified **110 × 45 mm** ticket area, slightly larger than the approximately 100 × 40 mm ticket in the supplied reference sheet.
+- `output/pdf/DJMM - Musical Housie - Checklist & Winners Sheet A4.pdf` — organizer checklist and winners register generated from `templates/djmm-checklist-winners-a4.html`.
+
+### Three synchronized deliverables
+
+Whenever the organization name, event date, song order, song title, housie-number mapping, or prize categories change, update and verify all three deliverables together:
+
+1. Web app
+2. Musical Housie participant PDF
+3. Musical Housie checklist and winners-sheet PDF
+
+`data/songs.json` remains the shared source of truth for event details and the 45-song list used by the web app and both PDF templates.
 
 ---
 
@@ -162,9 +174,11 @@ DJMM Musical Housie/
 ├── scripts/
 │   └── download-songs.py       # yt-dlp download script
 ├── templates/
-│   └── djmm-musical-housie-a4.html # Printable A4 PDF source with 110 × 45 mm ticket guide
+│   ├── djmm-musical-housie-a4.html # Printable participant-sheet source with 110 × 45 mm ticket guide
+│   └── djmm-checklist-winners-a4.html # Organizer checklist and winners-sheet source
 ├── output/pdf/
-│   └── DJMM - Musical Housie A4.pdf # Gujarati housie PDF
+│   ├── DJMM - Musical Housie A4.pdf # Gujarati participant sheet
+│   └── DJMM - Musical Housie - Checklist & Winners Sheet A4.pdf
 ├── sw.js                       # Audio-focused service worker
 ├── context.md                  # This file
 ├── README.md                   # User-facing quick start
