@@ -247,7 +247,12 @@
     setTxt(els.songNameHi,    song.nameHi || "");
     setTxt(els.songSingers,   song.singers || AUDIO_PENDING_GU);
 
-    const metaParts = [song.movie, song.year, song.musicBy ? "Music: " + song.musicBy : ""].filter(Boolean);
+    const metaParts = [
+      song.movie,
+      song.year,
+      song.musicBy ? "Music: " + song.musicBy : "",
+      song.albumBy ? "Album by: " + song.albumBy : ""
+    ].filter(Boolean);
     setTxt(els.songMeta, metaParts.length ? metaParts.join(" · ") : "વિગતો પછી ઉમેરાશે");
 
     updateArt(song);
@@ -566,7 +571,7 @@
   async function init() {
     els.app.classList.add("loading");
     try {
-      const res  = await fetch("data/songs.json?v=20260907a");
+      const res  = await fetch("data/songs.json?v=20260907b");
       const data = await res.json();
 
       if (data.event) {
