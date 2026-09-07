@@ -251,6 +251,7 @@
       song.movie,
       song.year,
       song.musicBy ? "Music: " + song.musicBy : "",
+      song.lyricsBy ? "Lyrics: " + song.lyricsBy : "",
       song.albumBy ? "Album by: " + song.albumBy : ""
     ].filter(Boolean);
     setTxt(els.songMeta, metaParts.length ? metaParts.join(" · ") : "વિગતો પછી ઉમેરાશે");
